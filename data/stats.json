@@ -1,0 +1,30 @@
+{
+  "total_professors": 346,
+  "total_slots": 1760,
+  "available_slots": 940,
+  "departments_count": 8,
+  "directions_distribution": {
+    "Mathematics & CS Theory": 89,
+    "AI & Machine Learning": 45,
+    "DevOps & Networks": 63,
+    "Software Engineering": 86,
+    "Web & Backend": 38,
+    "IT Management & Business": 68,
+    "Data Science & Big Data": 26,
+    "Mobile Development": 7,
+    "IoT & Embedded Systems": 37,
+    "Cybersecurity & InfoSec": 49,
+    "Digital Media & Journalism": 14,
+    "GameDev & Graphics": 15
+  },
+  "department_distribution": {
+    "Департамент фундаментальных наук и математики": 70,
+    "Департамент анализа данных и искусственного интеллекта": 57,
+    "Департамент программной инженерии (Software Engineering)": 53,
+    "Департамент IT-менеджмента и инноваций": 48,
+    "Департамент компьютерных наук (Computer Science)": 15,
+    "Департамент электроники, робототехники и IoT": 35,
+    "Департамент кибербезопасности и сетевых технологий": 49,
+    "Департамент медиатехнологий и цифрового дизайна": 19
+  }
+}

@@ -1,1 +1,19 @@
-/dump_parsed.json
+node_modules/
+dist/
+dist-server/
+coverage/
+.env
+.env.*
+!.env.example
+data/runtime-state.sqlite
+data/runtime-state.sqlite-shm
+data/runtime-state.sqlite-wal
+*.log
+.DS_Store
+Thumbs.db
+dump_parsed.json
+
+# Legacy prototype kept only as source reference.
+css/
+js/
+data/*_data.js

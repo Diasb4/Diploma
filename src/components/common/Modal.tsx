@@ -14,15 +14,17 @@ export const Modal: React.FC<ModalProps> = ({ title, description, onClose, child
   const titleId = useId();
   const descriptionId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
 
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const panel = panelRef.current;
-    panel?.querySelector<HTMLElement>('button, input, select, textarea, a[href]')?.focus();
+    panel?.querySelector<HTMLElement>('[data-modal-autofocus], input, select, textarea, button, a[href]')?.focus();
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') onCloseRef.current();
       if (event.key !== 'Tab' || !panel) return;
       const focusable = [...panel.querySelectorAll<HTMLElement>('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]')];
       if (!focusable.length) return;
@@ -37,7 +39,7 @@ export const Modal: React.FC<ModalProps> = ({ title, description, onClose, child
       document.body.style.overflow = originalOverflow;
       previous?.focus();
     };
-  }, [onClose]);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-slate-950/65 p-4" onMouseDown={onClose}>

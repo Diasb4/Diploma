@@ -1,0 +1,229 @@
+@startuml use-case-overview
+' MAS-13: Use Case diagrams for the Multi-Criteria Assignment System.
+' This file holds four diagrams: an overview and one detailed view per actor.
+
+title MAS: Use Case Overview
+
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam ArrowColor Black
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+}
+skinparam actor {
+  BackgroundColor White
+  BorderColor Black
+}
+
+actor "Student" as Student
+actor "Supervisor" as Supervisor
+actor "Department\nCoordinator" as Coordinator
+
+rectangle "Multi-Criteria Assignment System (MAS)" {
+  usecase "Log in with university email" as LOGIN
+
+  usecase "Maintain academic profile\nand thesis proposal" as S1
+  usecase "Get supervisor recommendations" as S2
+  usecase "Rank preferred supervisors" as S3
+  usecase "View final assignment" as S4
+
+  usecase "Maintain research profile\nand publications" as P1
+  usecase "Set student quota" as P2
+  usecase "Review applicants" as P3
+
+  usecase "Configure cycle, quotas\nand scoring weights" as C1
+  usecase "Run automatic assignment" as C2
+  usecase "Review and adjust results" as C3
+  usecase "Publish and export assignments" as C4
+}
+
+Student --> LOGIN
+Supervisor --> LOGIN
+Coordinator --> LOGIN
+
+Student --> S1
+Student --> S2
+Student --> S3
+Student --> S4
+
+Supervisor --> P1
+Supervisor --> P2
+Supervisor --> P3
+
+Coordinator --> C1
+Coordinator --> C2
+Coordinator --> C3
+Coordinator --> C4
+@enduml
+
+@startuml use-case-student
+title MAS: Student Use Cases
+
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam ArrowColor Black
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+}
+skinparam actor {
+  BackgroundColor White
+  BorderColor Black
+}
+
+actor "Student" as Student
+
+rectangle "MAS: Student scenarios" {
+  usecase "UC-01\nLog in with\nuniversity email" as UC01
+  usecase "UC-02\nFill in academic profile" as UC02
+  usecase "UC-03\nSubmit thesis proposal" as UC03
+  usecase "UC-04\nCheck proposal\ncompatibility" as UC04
+  usecase "UC-05\nBrowse supervisor catalog" as UC05
+  usecase "UC-06\nSearch and filter\nsupervisors" as UC06
+  usecase "UC-07\nView recommended supervisors\nwith match score" as UC07
+  usecase "UC-08\nRank preferred supervisors" as UC08
+  usecase "UC-09\nView final assignment" as UC09
+
+  usecase "UC-24\nCompute semantic similarity" as UC24
+  usecase "UC-27\nUpdate profile embedding" as UC27
+  usecase "UC-28\nValidate deadline and quota" as UC28
+}
+
+Student --> UC01
+Student --> UC02
+Student --> UC03
+Student --> UC04
+Student --> UC05
+Student --> UC07
+Student --> UC08
+Student --> UC09
+
+UC03 ..> UC27 : <<include>>
+UC04 ..> UC24 : <<include>>
+UC07 ..> UC24 : <<include>>
+UC08 ..> UC28 : <<include>>
+
+UC04 ..> UC03 : <<extend>>
+UC06 ..> UC05 : <<extend>>
+
+note right of UC08
+  Ordered list: 1st, 2nd, 3rd choice.
+  Accepted only before the deadline
+  set in UC-16.
+end note
+@enduml
+
+@startuml use-case-supervisor
+title MAS: Supervisor Use Cases
+
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam ArrowColor Black
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+}
+skinparam actor {
+  BackgroundColor White
+  BorderColor Black
+}
+
+actor "Supervisor" as Supervisor
+
+rectangle "MAS: Supervisor scenarios" {
+  usecase "UC-01\nLog in with\nuniversity email" as UC01
+  usecase "UC-10\nManage research profile" as UC10
+  usecase "UC-11\nManage publications" as UC11
+  usecase "UC-12\nPropose diploma topics" as UC12
+  usecase "UC-13\nSet student quota" as UC13
+  usecase "UC-14\nReview applicants" as UC14
+  usecase "UC-15\nMark priority applicants" as UC15
+
+  usecase "UC-24\nCompute semantic similarity" as UC24
+  usecase "UC-27\nUpdate profile embedding" as UC27
+  usecase "UC-28\nValidate deadline and quota" as UC28
+}
+
+Supervisor --> UC01
+Supervisor --> UC10
+Supervisor --> UC11
+Supervisor --> UC12
+Supervisor --> UC13
+Supervisor --> UC14
+
+UC10 ..> UC27 : <<include>>
+UC11 ..> UC27 : <<include>>
+UC13 ..> UC28 : <<include>>
+UC14 ..> UC24 : <<include>>
+
+UC15 ..> UC14 : <<extend>>
+
+note right of UC13
+  The quota must stay inside
+  the limits from UC-17.
+end note
+@enduml
+
+@startuml use-case-coordinator
+title MAS: Department Coordinator Use Cases
+
+left to right direction
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam ArrowColor Black
+skinparam usecase {
+  BackgroundColor White
+  BorderColor Black
+}
+skinparam actor {
+  BackgroundColor White
+  BorderColor Black
+}
+
+actor "Department\nCoordinator" as Coordinator
+
+rectangle "MAS: Coordinator scenarios" {
+  usecase "UC-01\nLog in with\nuniversity email" as UC01
+  usecase "UC-16\nConfigure cycle deadlines" as UC16
+  usecase "UC-17\nSet global quota limits" as UC17
+  usecase "UC-18\nConfigure scoring weights" as UC18
+  usecase "UC-19\nRun automatic assignment" as UC19
+  usecase "UC-20\nReview distribution metrics" as UC20
+  usecase "UC-21\nReassign student manually" as UC21
+  usecase "UC-22\nPublish final assignments" as UC22
+  usecase "UC-23\nExport report (PDF / Excel)" as UC23
+
+  usecase "UC-24\nCompute semantic similarity" as UC24
+  usecase "UC-25\nCompute multi-criteria\nutility scores" as UC25
+  usecase "UC-26\nSolve constrained matching" as UC26
+}
+
+Coordinator --> UC01
+Coordinator --> UC16
+Coordinator --> UC17
+Coordinator --> UC18
+Coordinator --> UC19
+Coordinator --> UC20
+Coordinator --> UC22
+Coordinator --> UC23
+
+UC19 ..> UC25 : <<include>>
+UC19 ..> UC26 : <<include>>
+UC25 ..> UC24 : <<include>>
+UC22 ..> UC20 : <<include>>
+
+UC21 ..> UC20 : <<extend>>
+
+note right of UC19
+  Uses weights from UC-18 and
+  quotas from UC-13 and UC-17.
+end note
+@enduml

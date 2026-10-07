@@ -1,140 +1,137 @@
-# Development of a Multi-Criteria System for Selecting and Assigning Academic Supervisors Based on Machine Learning Methods
+# Multi-Criteria Academic Supervisor Assignment System (MAS)
 
-[![Pre-Defense Status](https://img.shields.io/badge/Pre--Defense_1-In_Progress_(Oct_24)-blue.svg)](https://diploma-aitu-2027.youtrack.cloud)
-[![YouTrack](https://img.shields.io/badge/YouTrack-Project_MAS-orange.svg)](https://diploma-aitu-2027.youtrack.cloud)
-[![Academic Year](https://img.shields.io/badge/Academic_Year-2026--2027-success.svg)](#)
-
----
-
-## 📌 1. Project Overview & Description
-
-**Topic:** Development of a Multi-Criteria System for Selecting and Assigning Academic Supervisors Based on Machine Learning Methods  
-**Domain:** EdTech, Natural Language Processing (NLP), Multi-Criteria Decision Making (MCDM), Stable Matching Optimization.
-
-The project aims to create an intelligent software platform that automates and optimizes the distribution of graduating students among academic supervisors. The system combines modern Natural Language Processing (NLP) techniques for semantic topic-to-competency matching with constrained multi-criteria optimization algorithms to ensure balanced supervisor workloads and high mutual satisfaction.
+> **Diploma Project**  
+> **Topic:** Development of a Multi-Criteria System for Selecting and Assigning Academic Supervisors Based on Machine Learning Methods  
+> **Institution:** Astana IT University (AITU), 2026–2027  
 
 ---
 
-## ❗ 2. Problem Statement, Target Users & Expected Outcomes
+## Overview
 
-### Problem Statement
-In higher education institutions, the process of assigning academic supervisors is traditionally performed manually or via basic spreadsheets. This leads to critical drawbacks:
-* **Academic Mismatches:** Students are often assigned to supervisors whose research domain diverges from the student's research proposal.
-* **Workload Imbalance:** Popular supervisors become overloaded, while others are underutilized, negatively impacting supervision quality.
-* **Lack of Transparency & Fairness:** Subjective manual sorting creates dissatisfaction and prolonged administrative delays for academic departments.
+This project is a web platform designed to solve the problem of assigning graduating students to academic supervisors. 
+
+Instead of handling topic applications through scattered Google Forms and spreadsheets, the system combines:
+1. **NLP-based topic matching:** analyzing student thesis abstracts against faculty research profiles and publications to suggest suitable advisors.
+2. **Constrained matching optimization:** running an extended Gale-Shapley (Hospital-Resident) algorithm to fairly distribute students according to their ranked preferences while strictly respecting supervisor quota limits.
+
+---
+
+## Problem & Objectives
+
+### The Problem
+Every academic year, thesis allocation runs into the same bottlenecks:
+* **Topic mismatch:** Students frequently end up with supervisors whose current research has little to do with the student's project idea.
+* **Uneven faculty workload:** Well-known professors get overwhelmed with applications, while others have open capacity, leading to unbalanced advising quality.
+* **Manual coordination overhead:** Departments spend weeks manually resolving conflicts, handling rejections, and reassigning unallocated students in spreadsheets.
 
 ### Target Users
-1. **Graduating Students:** Search, receive AI-driven supervisor recommendations based on thesis ideas, and submit prioritized preferences.
-2. **Academic Supervisors (Faculty Members):** Manage scientific interests, publication records, available quotas, and review matched applicant profiles.
-3. **Department Chairs & Thesis Coordinators:** Oversee institutional quotas, configure multi-criteria optimization weights, execute global automated allocation, and generate reports.
+* **Students:** Explore faculty research areas, get topic-match recommendations, and submit an ordered list of preferred supervisors.
+* **Supervisors:** Maintain research interests and publications, set student capacity quotas for the year, and review assigned candidates.
+* **Department Coordinators:** Manage global quotas, review matching metrics, resolve edge cases, and export final allocation lists.
 
-### Expected Outcomes
-* A centralized web platform automating the supervisor selection lifecycle.
-* An NLP-based recommendation service calculating semantic relevance between student research drafts and supervisor publications.
-* A constrained multi-criteria assignment engine guaranteeing optimal allocation without quota violations.
-* A reduction in department manual coordination time by over 80%.
+### Expected Results
+* A working web application with dedicated views for students, faculty, and administrators.
+* An automated matching service that produces fair, stable allocations with zero quota violations.
+* Significant reduction in the time required by department staff to coordinate thesis assignments.
 
 ---
 
-## 👥 3. Team Members, Roles & Academic Supervisor
+## Team & Supervision
 
-### Team Composition
+### Team Members
 
-| Member | Role | Key Responsibilities | GitHub Profile |
+| Name | Role | Responsibilities | GitHub |
 |---|---|---|---|
-| **Dias Tursynbai** | **Team Lead & Backend Engineer** | System Architecture, Database Schema, REST API (FastAPI), YouTrack/Git Management, System Integration | [@Diasb4](https://github.com/Diasb4) |
-| **Ардак** | **Machine Learning Engineer** | NLP Embeddings Pipeline, Semantic Similarity Engine, MCDM Formulation & Assignment Optimization Algorithm | — |
-| **Нуржан** | **Frontend Engineer** | User Experience (UX/UI) Design, Interactive Dashboards, Web Client (React/Next.js), Student/Supervisor Portals | — |
+| **Dias Tursynbai** | Team Lead / Backend | Project architecture, FastAPI backend, database schema, matching pipeline integration | [@Diasb4](https://github.com/Diasb4) |
+| **Ardak** | ML Engineer | NLP text embeddings (Sentence-Transformers), similarity scoring, optimization solver | Contributor |
+| **Nurzhan** | Frontend Engineer | Next.js / React client, preference ranking UI, dashboards and data visualization | Contributor |
 
 ### Academic Supervisor
 * **Тулебаев Ерсултан Бахытович**  
-  * Должность: Сеньор-лектор  
-  * Академическая степень: Магистр технических наук  
-  * Кафедра / Организация: Astana IT University (AITU)
+  Senior Lecturer, Master of Technical Sciences  
+  Astana IT University
 
 ---
 
-## 🎯 4. Project Scope & Current Development Status
+## Scope & Current Status
 
-### Project Scope
-* **In Scope (MVP for Diploma Project):**
-  * Profile management with supervisor publication/interest embeddings.
-  * Semantic matching of student thesis drafts using dense vector representations (`Sentence-Transformers`).
-  * Multi-criteria ranking incorporating student preferences, research alignment, and GPA/prerequisites.
-  * Constrained global assignment solver (Gale-Shapley / Integer Linear Programming) ensuring strict supervisor capacity limits.
-  * Administrator analytics dashboard for distribution results.
-* **Out of Scope (Future Work):**
-  * Automated synchronization with closed corporate payroll/HR systems.
-  * Native iOS/Android mobile applications.
+### Scope Boundaries
+* **In Scope for Diploma:**
+  * User profiles and role-based access (Student, Supervisor, Coordinator).
+  * Thesis proposal submission (title, abstract, keywords).
+  * Text vectorization and similarity search using PostgreSQL `pgvector`.
+  * Multi-criteria ranking (semantic match + student preference rank + GPA weight).
+  * Batch allocation solver under hard capacity constraints.
+  * Web interface for preference submission and results inspection.
+* **Out of Scope:**
+  * Direct integration with internal university HR/payroll systems.
+  * Native mobile apps (the web client is mobile-responsive).
 
-### Current Status
-* **Current Milestone:** `Pre-defense 1` (Deadline: October 24, 2026).
-* **Completed / In-Progress Activities:**
-  * [x] Project Proposal & Scope Formalization
-  * [x] YouTrack Project & Workflow Configuration
-  * [ ] Evidence of Relevance (User Interviews)
-  * [ ] Systematic Literature Review (12 sources, 8 peer-reviewed)
-  * [ ] Existing Systems & Technology Comparisons
-  * [ ] Architectural Diagrams (Context, Use Case, Component)
-  * [ ] UX Prototypes & API Contracts
-  * [ ] Verification & Evaluation Plan
-
----
-
-## 💻 5. Selected Technologies
-
-| Component | Technology | Rationale |
-|---|---|---|
-| **Backend API** | **Python (FastAPI)** | High asynchronous performance, native compatibility with ML/NLP libraries. |
-| **Database & Vector Store** | **PostgreSQL + pgvector** | Robust relational data integrity combined with efficient cosine similarity vector search. |
-| **ML & NLP Engine** | **PyTorch, Sentence-Transformers, HuggingFace** | High-quality contextual embeddings for academic text matching. |
-| **Optimization Solver** | **PuLP / SciPy / NetworkX** | Mathematically verified solvers for constrained matching and assignment problems. |
-| **Frontend Web Client** | **React / Next.js, TypeScript** | Modern component-based UI, strong typing, and rich responsive UX. |
-| **Project Tracking** | **YouTrack Cloud & Git/GitHub** | Traceable task lifecycle, code reviews, and milestone governance. |
+### Current Development Status
+* **Milestone:** Pre-Defense 1 (October 24, 2026)
+* **Stage:** Analysis, System Design, and Requirements Formalization.
+* **Current Tasks:**
+  - [x] Initial repository setup and branch conventions
+  - [x] Project proposal and scope definition
+  - [ ] Problem validation interviews (CustDev)
+  - [ ] Literature review of matching algorithms and NLP methods
+  - [ ] System comparison and technology selection
+  - [ ] Architecture diagrams (System Context, Use Case, Component)
+  - [ ] UI wireframes and API specifications
+  - [ ] Verification plan and baseline benchmarks
 
 ---
 
-## 🔗 6. Project Management & Documentation Links
+## Tech Stack
 
-* **YouTrack Project Board:** [https://diploma-aitu-2027.youtrack.cloud](https://diploma-aitu-2027.youtrack.cloud)  
-  * Project Key: `MAS`
+* **Backend:** Python 3.11, FastAPI, SQLAlchemy, Pydantic
+* **Database & Vectors:** PostgreSQL 16 with `pgvector`
+* **Machine Learning / NLP:** PyTorch, Sentence-Transformers (`all-MiniLM-L6-v2`)
+* **Optimization:** Extended Gale-Shapley algorithm / PuLP (Integer Linear Programming)
+* **Frontend:** React, Next.js (TypeScript), Tailwind CSS
+* **Project Management:** YouTrack, Git / GitHub
+
+---
+
+## Project Tracking & Documentation
+
+* **YouTrack Board:** [diploma-aitu-2027.youtrack.cloud](https://diploma-aitu-2027.youtrack.cloud) (Project Key: `MAS`)
 * **Project Documentation (`/docs`):**
-  * [`01-proposal.md`](docs/01-proposal.md) — Detailed Project Proposal & Scope
-  * [`02-relevance-interviews.md`](docs/02-relevance-interviews.md) — CustDev User Interviews
-  * [`03-literature-review.md`](docs/03-literature-review.md) — Literature Review & Comparative Analysis
-  * [`04-existing-systems.md`](docs/04-existing-systems.md) — Existing System Comparison
-  * [`05-technology-selection.md`](docs/05-technology-selection.md) — Technology Trade-Off Analysis
-  * [`06-requirements-spec.md`](docs/06-requirements-spec.md) — FR, NFR, and Acceptance Criteria
-  * [`07-verification-plan.md`](docs/07-verification-plan.md) — Test Plan, Metrics, and Evaluation Baselines
-  * [`08-supervisor-feedback.md`](docs/08-supervisor-feedback.md) — Supervisor Reviews & Action Items
-* **Architectural Diagrams (`/diagrams`):**
-  * System Context Diagram
+  * `01-proposal.md` — Project proposal, objectives, and scope boundaries
+  * `02-relevance-interviews.md` — User research and stakeholder interview notes
+  * `03-literature-review.md` — Survey of existing academic papers and methods
+  * `04-existing-systems.md` — Comparison of existing allocation systems
+  * `05-technology-selection.md` — Technology choices and alternatives
+  * `06-requirements-spec.md` — Functional, non-functional requirements, and acceptance criteria
+  * `07-verification-plan.md` — Testing strategy, evaluation metrics, and baselines
+  * `08-supervisor-feedback.md` — Supervisor consultation log and revision history
+* **Architecture Diagrams (`/diagrams`):**
+  * System Context Diagram (C4 Level 1)
   * Use Case Diagram
-  * Component Architecture Diagram (Draft)
+  * Draft Component Diagram (C4 Level 3)
 
 ---
 
-## 🚀 7. Setup, Execution & Testing Instructions
+## Getting Started
 
-> **Note on Implementation Phase:**  
-> The project is currently at the **Analysis, Architecture & Requirements Design stage** (Pre-Defense 1). Application source code will be iteratively added to `src/` following architectural approval.
+> **Note:** The application code is currently in the design phase. Runnable services will be added during Milestone 2.
 
-### Prerequisites (Target Environment)
-* Python 3.11+
-* Node.js 20+
-* Docker & PostgreSQL 16 (with `pgvector` extension)
+### Planned Local Setup (Docker)
 
-### Planned Launch Workflow
 ```bash
 # 1. Clone repository
 git clone https://github.com/Diasb4/Diploma.git
 cd Diploma
 
-# 2. Environment Configuration
+# 2. Configure environment variables
 cp .env.example .env
 
-# 3. Running Services via Docker
+# 3. Start services
 docker compose up --build
 ```
 
-*(Full step-by-step execution scripts and automated test suites will be added upon completion of milestone Pre-Defense 2).*
+### Git Workflow Rules
+* `main` contains stable, reviewed versions only.
+* All features and documents are developed in separate task branches (`MAS-<id>-<description>`).
+* Changes are merged via Pull Request with review from another team member.
+* Each pre-defense submission is marked with a dedicated Git tag (e.g. `pre-defense-1`).

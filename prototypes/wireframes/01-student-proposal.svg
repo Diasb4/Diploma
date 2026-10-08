@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" viewBox="0 0 1280 820" font-family="Arial, Helvetica, sans-serif">
+  <title>Wireframe 1: Student proposal editor</title>
+  <desc>Low-fidelity wireframe of the student proposal screen with a compatibility preview. Sample data for illustration only.</desc>
+
+  <rect width="1280" height="820" fill="#ffffff"/>
+
+  <!-- Top bar -->
+  <g id="top-bar">
+    <rect x="0" y="0" width="1280" height="56" fill="#f3f3f3"/>
+    <line x1="0" y1="56" x2="1280" y2="56" stroke="#c8c8c8"/>
+    <text x="24" y="36" font-size="20" font-weight="bold" fill="#222">MAS</text>
+    <text x="120" y="35" font-size="14" font-weight="bold" fill="#222">Proposal</text>
+    <rect x="120" y="44" width="62" height="3" fill="#222"/>
+    <text x="220" y="35" font-size="14" fill="#666">Supervisors</text>
+    <text x="330" y="35" font-size="14" fill="#666">Preferences</text>
+    <text x="440" y="35" font-size="14" fill="#666">Results</text>
+    <rect x="1090" y="14" width="96" height="28" rx="14" fill="#ffffff" stroke="#999"/>
+    <text x="1138" y="33" font-size="13" fill="#444" text-anchor="middle">Student</text>
+    <circle cx="1226" cy="28" r="14" fill="#dddddd" stroke="#999"/>
+  </g>
+
+  <!-- Page heading -->
+  <text x="56" y="96" font-size="24" font-weight="bold" fill="#222">Thesis proposal</text>
+  <text x="56" y="120" font-size="14" fill="#666">Describe your topic. MAS compares it with supervisor research profiles.</text>
+
+  <!-- Left card: proposal form -->
+  <g id="proposal-form">
+    <rect x="56" y="140" width="704" height="620" rx="8" fill="#ffffff" stroke="#bbbbbb"/>
+    <text x="80" y="172" font-size="16" font-weight="bold" fill="#222">Proposal details</text>
+
+    <text x="80" y="206" font-size="13" font-weight="bold" fill="#333">Title</text>
+    <rect x="80" y="214" width="656" height="40" rx="4" fill="#fafafa" stroke="#aaaaaa"/>
+    <text x="94" y="239" font-size="14" fill="#999">Working title of your thesis</text>
+
+    <text x="80" y="286" font-size="13" font-weight="bold" fill="#333">Abstract</text>
+    <rect x="80" y="294" width="656" height="170" rx="4" fill="#fafafa" stroke="#aaaaaa"/>
+    <text x="94" y="320" font-size="14" fill="#999">Describe the problem, the method you plan to use</text>
+    <text x="94" y="342" font-size="14" fill="#999">and the result you expect.</text>
+    <text x="724" y="456" font-size="12" fill="#888" text-anchor="end">0 characters</text>
+
+    <text x="80" y="496" font-size="13" font-weight="bold" fill="#333">Keywords</text>
+    <rect x="80" y="504" width="656" height="48" rx="4" fill="#fafafa" stroke="#aaaaaa"/>
+    <rect x="92" y="514" width="136" height="28" rx="14" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="106" y="533" font-size="13" fill="#333">computer vision  ×</text>
+    <rect x="238" y="514" width="72" height="28" rx="14" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="252" y="533" font-size="13" fill="#333">NLP  ×</text>
+    <rect x="320" y="514" width="124" height="28" rx="14" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="334" y="533" font-size="13" fill="#333">transformers  ×</text>
+    <text x="462" y="533" font-size="13" fill="#999">Add keyword, press Enter</text>
+
+    <text x="80" y="584" font-size="13" font-weight="bold" fill="#333">Preferred tech stack (optional)</text>
+    <rect x="80" y="592" width="656" height="44" rx="4" fill="#fafafa" stroke="#aaaaaa"/>
+    <rect x="92" y="600" width="88" height="28" rx="14" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="106" y="619" font-size="13" fill="#333">Python  ×</text>
+    <rect x="190" y="600" width="100" height="28" rx="14" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="204" y="619" font-size="13" fill="#333">PyTorch  ×</text>
+
+    <rect x="80" y="668" width="130" height="44" rx="6" fill="#ffffff" stroke="#666666"/>
+    <text x="145" y="696" font-size="15" fill="#222" text-anchor="middle">Save draft</text>
+    <rect x="226" y="668" width="210" height="44" rx="6" fill="#222222"/>
+    <text x="331" y="696" font-size="15" font-weight="bold" fill="#ffffff" text-anchor="middle">Analyze compatibility</text>
+    <text x="736" y="696" font-size="13" fill="#888" text-anchor="end">Draft saved just now</text>
+  </g>
+
+  <!-- Right card: compatibility preview -->
+  <g id="compatibility-preview">
+    <rect x="784" y="140" width="472" height="620" rx="8" fill="#ffffff" stroke="#bbbbbb"/>
+    <text x="808" y="172" font-size="16" font-weight="bold" fill="#222">Compatibility preview</text>
+    <rect x="1128" y="154" width="104" height="26" rx="13" fill="#ffffff" stroke="#999" stroke-dasharray="4 3"/>
+    <text x="1180" y="172" font-size="12" fill="#666" text-anchor="middle">Sample data</text>
+    <text x="808" y="196" font-size="13" fill="#666">Best matches for your topic, shown after you analyze.</text>
+
+    <!-- Supervisor card A -->
+    <rect x="808" y="216" width="424" height="140" rx="6" fill="#fafafa" stroke="#bbbbbb"/>
+    <circle cx="858" cy="286" r="34" fill="#ffffff" stroke="#444444" stroke-width="3"/>
+    <text x="858" y="292" font-size="18" font-weight="bold" fill="#222" text-anchor="middle">94%</text>
+    <text x="912" y="252" font-size="16" font-weight="bold" fill="#222">Supervisor A</text>
+    <rect x="912" y="264" width="116" height="24" rx="12" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="970" y="281" font-size="12" fill="#333" text-anchor="middle">Computer vision</text>
+    <rect x="1036" y="264" width="100" height="24" rx="12" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="1086" y="281" font-size="12" fill="#333" text-anchor="middle">Deep learning</text>
+    <text x="912" y="308" font-size="13" fill="#444">Slots: 2 of 5 free</text>
+    <rect x="912" y="320" width="100" height="28" rx="4" fill="#ffffff" stroke="#888"/>
+    <text x="962" y="339" font-size="13" fill="#222" text-anchor="middle">View profile</text>
+    <rect x="1020" y="320" width="150" height="28" rx="4" fill="#eeeeee" stroke="#666"/>
+    <text x="1095" y="339" font-size="13" fill="#222" text-anchor="middle">Add to preferences</text>
+
+    <!-- Supervisor card B -->
+    <rect x="808" y="372" width="424" height="140" rx="6" fill="#fafafa" stroke="#bbbbbb"/>
+    <circle cx="858" cy="442" r="34" fill="#ffffff" stroke="#444444" stroke-width="3"/>
+    <text x="858" y="448" font-size="18" font-weight="bold" fill="#222" text-anchor="middle">87%</text>
+    <text x="912" y="408" font-size="16" font-weight="bold" fill="#222">Supervisor B</text>
+    <rect x="912" y="420" width="64" height="24" rx="12" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="944" y="437" font-size="12" fill="#333" text-anchor="middle">NLP</text>
+    <rect x="984" y="420" width="100" height="24" rx="12" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="1034" y="437" font-size="12" fill="#333" text-anchor="middle">Transformers</text>
+    <text x="912" y="464" font-size="13" fill="#444">Slots: 1 of 4 free</text>
+    <rect x="912" y="476" width="100" height="28" rx="4" fill="#ffffff" stroke="#888"/>
+    <text x="962" y="495" font-size="13" fill="#222" text-anchor="middle">View profile</text>
+    <rect x="1020" y="476" width="150" height="28" rx="4" fill="#eeeeee" stroke="#666"/>
+    <text x="1095" y="495" font-size="13" fill="#222" text-anchor="middle">Add to preferences</text>
+
+    <!-- Supervisor card C -->
+    <rect x="808" y="528" width="424" height="140" rx="6" fill="#fafafa" stroke="#bbbbbb"/>
+    <circle cx="858" cy="598" r="34" fill="#ffffff" stroke="#444444" stroke-width="3"/>
+    <text x="858" y="604" font-size="18" font-weight="bold" fill="#222" text-anchor="middle">79%</text>
+    <text x="912" y="564" font-size="16" font-weight="bold" fill="#222">Supervisor C</text>
+    <rect x="912" y="576" width="124" height="24" rx="12" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="974" y="593" font-size="12" fill="#333" text-anchor="middle">Machine learning</text>
+    <rect x="1044" y="576" width="92" height="24" rx="12" fill="#eeeeee" stroke="#aaaaaa"/>
+    <text x="1090" y="593" font-size="12" fill="#333" text-anchor="middle">Data mining</text>
+    <text x="912" y="620" font-size="13" fill="#444">Slots: 3 of 6 free</text>
+    <rect x="912" y="632" width="100" height="28" rx="4" fill="#ffffff" stroke="#888"/>
+    <text x="962" y="651" font-size="13" fill="#222" text-anchor="middle">View profile</text>
+    <rect x="1020" y="632" width="150" height="28" rx="4" fill="#eeeeee" stroke="#666"/>
+    <text x="1095" y="651" font-size="13" fill="#222" text-anchor="middle">Add to preferences</text>
+
+    <text x="808" y="704" font-size="14" fill="#222" text-decoration="underline">Show all supervisors</text>
+    <text x="808" y="732" font-size="12" fill="#888">The match score reflects topic similarity only.</text>
+  </g>
+
+  <!-- Numbered annotations, explained in prototypes/README.md -->
+  <g id="annotations" font-size="12" font-weight="bold" text-anchor="middle">
+    <circle cx="34" cy="234" r="11" fill="#222"/><text x="34" y="238" fill="#fff">1</text>
+    <circle cx="34" cy="380" r="11" fill="#222"/><text x="34" y="384" fill="#fff">2</text>
+    <circle cx="34" cy="528" r="11" fill="#222"/><text x="34" y="532" fill="#fff">3</text>
+    <circle cx="34" cy="690" r="11" fill="#222"/><text x="34" y="694" fill="#fff">4</text>
+    <circle cx="772" cy="286" r="11" fill="#222"/><text x="772" y="290" fill="#fff">5</text>
+    <circle cx="1200" cy="334" r="11" fill="#222"/><text x="1200" y="338" fill="#fff">6</text>
+  </g>
+
+  <text x="56" y="796" font-size="12" fill="#888">Wireframe 1 of 3. Student: proposal editor with compatibility preview. Sample data for illustration.</text>
+</svg>

@@ -1,0 +1,27 @@
+@startuml system-context
+title MAS - System Context (proposed architecture)
+left to right direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 0
+skinparam nodesep 80
+skinparam ranksep 100
+skinparam defaultFontName Arial
+skinparam wrapWidth 220
+skinparam rectangleBackgroundColor #F5F5F5
+rectangle "Student\n<<external user>>" as student
+rectangle "Supervisor\n<<external user>>" as supervisor
+rectangle "Department Coordinator\n<<external user>>" as coordinator
+rectangle "MAS system boundary" {
+  rectangle "Academic Supervisor Assignment System\n\nWeb interface and authenticated REST API\nTopic recommendations, ranked preferences,\ncapacity-constrained allocation and publication" as mas
+}
+rectangle "University Identity Provider\n<<external system>>\nSSO account authentication\nOIDC integration proposed" as idp
+student --> mas : 1
+supervisor --> mas : 2
+coordinator --> mas : 3
+mas --> idp : 4
+legend bottom
+  Numbered connectors: see diagrams/README.md for interaction details.
+  Rectangles identify users, systems, services and ownership boundaries.
+endlegend
+@enduml

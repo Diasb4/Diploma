@@ -1,0 +1,58 @@
+@startuml component-diagram
+title MAS - Components and Microservice Boundaries (proposed architecture)
+top to bottom direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam roundcorner 0
+skinparam nodesep 80
+skinparam ranksep 100
+skinparam defaultFontName Arial
+skinparam wrapWidth 200
+rectangle "Student / Supervisor /\nDepartment Coordinator" as users
+rectangle "University Identity Provider\n<<external>>\nOIDC / SSO" as idp
+rectangle "MAS system boundary" {
+  rectangle "Web Client\nNext.js / React\nRole-specific screens" as web
+  rectangle "Public API boundary" {
+    rectangle "API Gateway / BFF\nFastAPI\nREST validation and routing" as api
+    rectangle "Identity and Access\nOIDC callback / session handling\nMAS role and ownership checks" as auth
+  }
+  rectangle "Private backend network - no direct browser access" {
+    rectangle "Profile and Cycle Service\n<<microservice>>\nProposals, research profiles, quotas,\npreferences and cycle deadlines" as profiles
+    rectangle "Recommendation Service\n<<microservice>>\nSemantic scores and supervisor ranking" as recommend
+    rectangle "NLP Engine\n<<microservice>>\nSentence-Transformers / PyTorch\nVersioned text embeddings" as nlp
+    rectangle "Allocation Service\n<<microservice>>\nFrozen inputs, batch matching,\nvalidation and publication" as allocation
+    rectangle "Matching and Validation\n<<internal component>>\nHospital-Resident Gale-Shapley\nQuota, uniqueness and stability checks" as solver
+    rectangle "Audit Writer\n<<internal component>>\nAttributable change / run events" as audit
+    rectangle "Versioned Model Files\nRead-only local model weights" as weights
+  }
+  rectangle "Private persistence boundary" {
+    rectangle "PostgreSQL 16 + pgvector\n\nIdentity schema: accounts and roles\nProfile schema: proposals, research, preferences, cycles\nRecommendation schema: embeddings and model versions\nAllocation schema: snapshots, runs and results\nAudit schema: append-only events" as db
+  }
+}
+users --> web : 1
+web --> idp : 2
+web --> api : 3
+api --> auth : 4
+ auth --> idp : 5
+auth --> db : 6
+api --> profiles : 7
+api --> recommend : 8
+api --> allocation : 9
+profiles --> db : 10
+recommend --> profiles : 11
+recommend --> nlp : 12
+nlp --> weights : 13
+recommend --> db : 14
+allocation --> profiles : 15
+allocation --> recommend : 16
+allocation --> solver : 17
+allocation --> db : 18
+profiles --> audit : 19
+allocation --> audit : 20
+api --> audit : 21
+ audit --> db : 22
+legend bottom
+  Numbered connectors: see diagrams/README.md for interaction details.
+  Rectangles identify users, systems, services and ownership boundaries.
+endlegend
+@enduml

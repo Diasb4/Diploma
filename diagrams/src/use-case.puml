@@ -1,6 +1,7 @@
 @startuml use-case-overview
 ' MAS-13: Use Case diagrams for the Multi-Criteria Assignment System.
 ' This file holds four diagrams: an overview and one detailed view per actor.
+' Use case labels carry the requirement IDs from docs/06-requirements-spec.md.
 
 title MAS: Use Case Overview
 
@@ -23,21 +24,21 @@ actor "Supervisor" as Supervisor
 actor "Department\nCoordinator" as Coordinator
 
 rectangle "Multi-Criteria Assignment System (MAS)" {
-  usecase "Log in with university email" as LOGIN
+  usecase "Log in\n(FR-01)" as LOGIN
 
-  usecase "Maintain academic profile\nand thesis proposal" as S1
-  usecase "Get supervisor recommendations" as S2
-  usecase "Rank preferred supervisors" as S3
-  usecase "View final assignment" as S4
+  usecase "Submit thesis proposal\n(FR-02)" as S1
+  usecase "View recommended supervisors\n(FR-05)" as S2
+  usecase "Submit ordered preference list\n(FR-06)" as S3
+  usecase "View published result\n(FR-10)" as S4
 
-  usecase "Maintain research profile\nand publications" as P1
-  usecase "Set student quota" as P2
-  usecase "Review applicants" as P3
+  usecase "Maintain research profile\nand propose capacity\n(FR-03)" as P1
+  usecase "View own published assignments\n(FR-10)" as P2
 
-  usecase "Configure cycle, quotas\nand scoring weights" as C1
-  usecase "Run automatic assignment" as C2
-  usecase "Review and adjust results" as C3
-  usecase "Publish and export assignments" as C4
+  usecase "Set up allocation cycle\n(FR-03, FR-04, FR-07)" as C1
+  usecase "Run batch allocation\n(FR-08)" as C2
+  usecase "Review and revise draft\n(FR-09, FR-13)" as C3
+  usecase "Publish and export result\n(FR-10, FR-11)" as C4
+  usecase "View audit log\n(FR-12)" as C5
 }
 
 Student --> LOGIN
@@ -51,12 +52,12 @@ Student --> S4
 
 Supervisor --> P1
 Supervisor --> P2
-Supervisor --> P3
 
 Coordinator --> C1
 Coordinator --> C2
 Coordinator --> C3
 Coordinator --> C4
+Coordinator --> C5
 @enduml
 
 @startuml use-case-student
@@ -70,6 +71,7 @@ skinparam ArrowColor Black
 skinparam usecase {
   BackgroundColor White
   BorderColor Black
+  BackgroundColor<<proposed>> #EEEEEE
 }
 skinparam actor {
   BackgroundColor White
@@ -79,42 +81,33 @@ skinparam actor {
 actor "Student" as Student
 
 rectangle "MAS: Student scenarios" {
-  usecase "UC-01\nLog in with\nuniversity email" as UC01
-  usecase "UC-02\nFill in academic profile" as UC02
-  usecase "UC-03\nSubmit thesis proposal" as UC03
-  usecase "UC-04\nCheck proposal\ncompatibility" as UC04
-  usecase "UC-05\nBrowse supervisor catalog" as UC05
-  usecase "UC-06\nSearch and filter\nsupervisors" as UC06
-  usecase "UC-07\nView recommended supervisors\nwith match score" as UC07
-  usecase "UC-08\nRank preferred supervisors" as UC08
-  usecase "UC-09\nView final assignment" as UC09
+  usecase "UC-01\nLog in\n(FR-01)" as UC01
+  usecase "UC-02\nCreate, edit and submit\nthesis proposal\n(FR-02)" as UC02
+  usecase "UC-03\nView recommended supervisors\n(up to five, FR-05)" as UC03
+  usecase "UC-04\nView supervisor profile\n(no FR yet)" as UC04 <<proposed>>
+  usecase "UC-05\nSubmit and reorder preference list\n(1 to 5 supervisors, FR-06)" as UC05
+  usecase "UC-06\nView published result\n(FR-10)" as UC06
 
+  usecase "UC-23\nValidate deadline and eligibility" as UC23
   usecase "UC-24\nCompute semantic similarity" as UC24
-  usecase "UC-27\nUpdate profile embedding" as UC27
-  usecase "UC-28\nValidate deadline and quota" as UC28
 }
 
 Student --> UC01
 Student --> UC02
 Student --> UC03
-Student --> UC04
 Student --> UC05
-Student --> UC07
-Student --> UC08
-Student --> UC09
+Student --> UC06
 
-UC03 ..> UC27 : <<include>>
-UC04 ..> UC24 : <<include>>
-UC07 ..> UC24 : <<include>>
-UC08 ..> UC28 : <<include>>
+UC02 ..> UC23 : <<include>>
+UC05 ..> UC23 : <<include>>
+UC03 ..> UC24 : <<include>>
 
 UC04 ..> UC03 : <<extend>>
-UC06 ..> UC05 : <<extend>>
 
-note right of UC08
-  Ordered list: 1st, 2nd, 3rd choice.
-  Accepted only before the deadline
-  set in UC-16.
+note right of UC03
+  Available after the proposal
+  is submitted. The score is a
+  similarity score in [0, 1].
 end note
 @enduml
 
@@ -138,36 +131,21 @@ skinparam actor {
 actor "Supervisor" as Supervisor
 
 rectangle "MAS: Supervisor scenarios" {
-  usecase "UC-01\nLog in with\nuniversity email" as UC01
-  usecase "UC-10\nManage research profile" as UC10
-  usecase "UC-11\nManage publications" as UC11
-  usecase "UC-12\nPropose diploma topics" as UC12
-  usecase "UC-13\nSet student quota" as UC13
-  usecase "UC-14\nReview applicants" as UC14
-  usecase "UC-15\nMark priority applicants" as UC15
-
-  usecase "UC-24\nCompute semantic similarity" as UC24
-  usecase "UC-27\nUpdate profile embedding" as UC27
-  usecase "UC-28\nValidate deadline and quota" as UC28
+  usecase "UC-01\nLog in\n(FR-01)" as UC01
+  usecase "UC-07\nMaintain research interests\nand publication text\n(FR-03)" as UC07
+  usecase "UC-08\nPropose capacity\n(FR-03)" as UC08
+  usecase "UC-09\nView own published assignments\n(FR-10)" as UC09
 }
 
 Supervisor --> UC01
-Supervisor --> UC10
-Supervisor --> UC11
-Supervisor --> UC12
-Supervisor --> UC13
-Supervisor --> UC14
+Supervisor --> UC07
+Supervisor --> UC08
+Supervisor --> UC09
 
-UC10 ..> UC27 : <<include>>
-UC11 ..> UC27 : <<include>>
-UC13 ..> UC28 : <<include>>
-UC14 ..> UC24 : <<include>>
-
-UC15 ..> UC14 : <<extend>>
-
-note right of UC13
-  The quota must stay inside
-  the limits from UC-17.
+note right of UC08
+  A proposed capacity counts
+  only after the coordinator
+  approves it (UC-12).
 end note
 @enduml
 
@@ -191,39 +169,50 @@ skinparam actor {
 actor "Department\nCoordinator" as Coordinator
 
 rectangle "MAS: Coordinator scenarios" {
-  usecase "UC-01\nLog in with\nuniversity email" as UC01
-  usecase "UC-16\nConfigure cycle deadlines" as UC16
-  usecase "UC-17\nSet global quota limits" as UC17
-  usecase "UC-18\nConfigure scoring weights" as UC18
-  usecase "UC-19\nRun automatic assignment" as UC19
-  usecase "UC-20\nReview distribution metrics" as UC20
-  usecase "UC-21\nReassign student manually" as UC21
-  usecase "UC-22\nPublish final assignments" as UC22
-  usecase "UC-23\nExport report (PDF / Excel)" as UC23
+  usecase "UC-01\nLog in\n(FR-01)" as UC01
+  usecase "UC-10\nCreate cycle and set deadline\n(FR-04)" as UC10
+  usecase "UC-11\nEnroll eligible participants\n(FR-04)" as UC11
+  usecase "UC-12\nApprove supervisor capacity\n(FR-03)" as UC12
+  usecase "UC-13\nConfigure ranking policy\n(semantic weight, optional GPA\nweight, versioned, FR-07)" as UC13
+  usecase "UC-14\nFreeze input snapshot\n(FR-04)" as UC14
+  usecase "UC-15\nRun batch allocation\n(FR-08)" as UC15
+  usecase "UC-16\nReview draft allocation\n(FR-09)" as UC16
+  usecase "UC-17\nRevise draft with\nmanual reassignment\n(Should, FR-13)" as UC17
+  usecase "UC-18\nPublish allocation\n(FR-10)" as UC18
+  usecase "UC-19\nExport allocation as CSV\n(FR-11)" as UC19
+  usecase "UC-20\nView audit log\n(FR-12)" as UC20
+  usecase "UC-21\nCompare with baselines\n(Should, FR-15)" as UC21
+  usecase "UC-22\nCompare draft scenarios\n(Could, FR-16)" as UC22
 
   usecase "UC-24\nCompute semantic similarity" as UC24
-  usecase "UC-25\nCompute multi-criteria\nutility scores" as UC25
-  usecase "UC-26\nSolve constrained matching" as UC26
+  usecase "UC-25\nBuild supervisor-side ranking" as UC25
+  usecase "UC-26\nSolve capacity-constrained\nmatching" as UC26
+  usecase "UC-27\nValidate allocation\n(capacity, eligibility,\nuniqueness, stability)" as UC27
+  usecase "UC-28\nNotify participants\n(Should, FR-14)" as UC28
 }
 
 Coordinator --> UC01
+Coordinator --> UC10
+Coordinator --> UC11
+Coordinator --> UC12
+Coordinator --> UC13
+Coordinator --> UC15
 Coordinator --> UC16
-Coordinator --> UC17
 Coordinator --> UC18
 Coordinator --> UC19
 Coordinator --> UC20
+Coordinator --> UC21
 Coordinator --> UC22
-Coordinator --> UC23
 
-UC19 ..> UC25 : <<include>>
-UC19 ..> UC26 : <<include>>
+UC15 ..> UC14 : <<include>>
+UC15 ..> UC25 : <<include>>
+UC15 ..> UC26 : <<include>>
 UC25 ..> UC24 : <<include>>
-UC22 ..> UC20 : <<include>>
+UC16 ..> UC27 : <<include>>
+UC18 ..> UC27 : <<include>>
 
-UC21 ..> UC20 : <<extend>>
+UC17 ..> UC16 : <<extend>>
+UC17 ..> UC27 : <<include>>
+UC28 ..> UC18 : <<extend>>
 
-note right of UC19
-  Uses weights from UC-18 and
-  quotas from UC-13 and UC-17.
-end note
 @enduml

@@ -124,7 +124,7 @@
 <text x="808" y="626" font-size="12" font-weight="bold" fill="#666" text-anchor="start" >Other eligible supervisors</text>
 <rect x="808" y="638" width="424" height="64" rx="6" fill="#fafafa" stroke="#bbb" />
 <text x="824" y="664" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Supervisor F</text>
-<text x="824" y="686" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Similarity 0.58, capacity 3</text>
+<text x="824" y="686" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Capacity 3</text>
 <rect x="1140" y="656" width="76" height="28" rx="4" fill="#eee" stroke="#666" />
 <text x="1178.0" y="674.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle" >Add</text>
 <text x="808" y="740" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Supervisors with an approved capacity of zero are not listed.</text>

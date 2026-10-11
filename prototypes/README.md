@@ -14,7 +14,7 @@ The SVG files are the editable sources. The PNG files are exports at 2x size.
 | 2 | Preference list (ordered) | Student | [SVG](wireframes/02-student-preferences.svg), [PNG](wireframes/02-student-preferences.png) | Done |
 | 3 | Allocation control panel | Coordinator | [SVG](wireframes/03-coordinator-allocation.svg), [PNG](wireframes/03-coordinator-allocation.png) | Done |
 
-The interactive Figma prototype and the REST API request and response examples are still to be added.
+The REST API request and response examples are in [api-contracts.md](api-contracts.md). They are a draft for the backend to review. The interactive Figma prototype is still to be added.
 
 ## Screen 1: proposal editor with recommendations
 

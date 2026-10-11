@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="900" viewBox="0 0 1280 900" font-family="Arial, Helvetica, sans-serif">
+<title>Wireframe 3: Coordinator allocation control panel</title>
+<desc>Low-fidelity wireframe of the coordinator panel. Readiness checks, ranking policy, run, draft review with validation results, quota usage, publication, CSV export and audit log, as in FR-04 and FR-07 to FR-13. Sample data for illustration only.</desc>
+<rect width="1280" height="900" fill="#ffffff"/>
+<g id="top-bar">
+<rect x="0" y="0" width="1280" height="56" fill="#f3f3f3"/><line x1="0" y1="56" x2="1280" y2="56" stroke="#c8c8c8"/>
+<text x="24" y="36" font-size="20" font-weight="bold" fill="#222" text-anchor="start" >MAS</text>
+<text x="120" y="35" font-size="14" font-weight="normal" fill="#666" text-anchor="start" >Cycle</text>
+<text x="190" y="35" font-size="14" font-weight="normal" fill="#666" text-anchor="start" >Capacity</text>
+<text x="280" y="35" font-size="14" font-weight="normal" fill="#666" text-anchor="start" >Policy</text>
+<text x="350" y="35" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Allocation</text>
+<rect x="350" y="44" width="76" height="3" fill="#222"/>
+<text x="460" y="35" font-size="14" font-weight="normal" fill="#666" text-anchor="start" >Audit log</text>
+<rect x="1074" y="14" width="112" height="28" rx="14" fill="#fff" stroke="#999" />
+<text x="1130" y="33" font-size="13" font-weight="normal" fill="#444" text-anchor="middle" >Coordinator</text>
+<circle cx="1226" cy="28" r="14" fill="#ddd" stroke="#999"/>
+</g>
+<text x="56" y="96" font-size="24" font-weight="bold" fill="#222" text-anchor="start" >Allocation</text>
+<text x="56" y="120" font-size="14" font-weight="normal" fill="#666" text-anchor="start" >Run the matching on the frozen input, check the draft, then publish.</text>
+<text x="1256" y="96" font-size="13" font-weight="normal" fill="#444" text-anchor="end" >Inputs frozen: date and time, with time zone</text>
+<g id="readiness">
+<rect x="56" y="140" width="360" height="370" rx="8" fill="#fff" stroke="#bbb" />
+<text x="80" y="172" font-size="16" font-weight="bold" fill="#222" text-anchor="start" >Before you run</text>
+<text x="80" y="196" font-size="13" font-weight="normal" fill="#666" text-anchor="start" >All three checks must pass.</text>
+<rect x="80" y="212" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="96" y="236" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Capacities approved</text>
+<text x="96" y="256" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >25 of 25 supervisors</text>
+<rect x="330" y="227" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="356.0" y="245" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
+<rect x="80" y="276" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="96" y="300" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Ranking policy approved</text>
+<text x="96" y="320" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Version v3</text>
+<rect x="330" y="291" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="356.0" y="309" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
+<rect x="80" y="340" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="96" y="364" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Input snapshot frozen</text>
+<text x="96" y="384" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >38 eligible students, 2 ineligible</text>
+<rect x="330" y="355" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="356.0" y="373" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
+<text x="80" y="424" font-size="13" font-weight="normal" fill="#222" text-anchor="start" text-decoration="underline">Show ineligible students and reasons</text>
+<rect x="80" y="438" width="200" height="44" rx="6" fill="#222" stroke="#222" />
+<text x="180" y="466" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle" >Run allocation</text>
+<text x="80" y="500" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Disabled until all three checks pass.</text>
+</g>
+<g id="ranking-policy">
+<rect x="56" y="530" width="360" height="320" rx="8" fill="#fff" stroke="#bbb" />
+<text x="80" y="562" font-size="16" font-weight="bold" fill="#222" text-anchor="start" >Ranking policy</text>
+<rect x="272" y="546" width="120" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="332.0" y="564" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Active version v3</text>
+<text x="80" y="588" font-size="13" font-weight="normal" fill="#666" text-anchor="start" >Weights are 0 or more and add up to 1.</text>
+<text x="80" y="622" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >Semantic match weight</text>
+<rect x="80" y="632" width="140" height="34" rx="4" fill="#fff" stroke="#888" />
+<text x="94" y="654" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.80</text>
+<text x="80" y="694" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >GPA weight (optional)</text>
+<rect x="80" y="704" width="140" height="34" rx="4" fill="#fff" stroke="#888" />
+<text x="94" y="726" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.20</text>
+<text x="240" y="690" font-size="13" font-weight="bold" fill="#444" text-anchor="start" >Sum: 1.00</text>
+<text x="240" y="708" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Valid</text>
+<rect x="80" y="762" width="200" height="40" rx="4" fill="#fff" stroke="#888" />
+<text x="180.0" y="786.0" font-size="13" font-weight="normal" fill="#222" text-anchor="middle" >Save as new version</text>
+<text x="80" y="826" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >A run keeps the policy version it started with.</text>
+</g>
+<g id="draft-allocation">
+<rect x="440" y="140" width="816" height="710" rx="8" fill="#fff" stroke="#bbb" />
+<text x="464" y="172" font-size="16" font-weight="bold" fill="#222" text-anchor="start" >Draft allocation, run R-0042</text>
+<rect x="868" y="154" width="104" height="26" rx="13" fill="#fff" stroke="#999" stroke-dasharray="4 3"/>
+<text x="920.0" y="172" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Sample data</text>
+<rect x="984" y="154" width="248" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="1108.0" y="172" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Status: Draft, not published</text>
+<text x="464" y="196" font-size="13" font-weight="normal" fill="#666" text-anchor="start" >Students and supervisors cannot see the draft until you publish it.</text>
+<rect x="464" y="212" width="183" height="60" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="478" y="234" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Assigned</text>
+<text x="478" y="260" font-size="20" font-weight="bold" fill="#222" text-anchor="start" >33 of 38</text>
+<rect x="659" y="212" width="183" height="60" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="673" y="234" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Unmatched</text>
+<text x="673" y="260" font-size="20" font-weight="bold" fill="#222" text-anchor="start" >5</text>
+<rect x="854" y="212" width="183" height="60" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="868" y="234" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >First-choice satisfaction</text>
+<text x="868" y="260" font-size="20" font-weight="bold" fill="#222" text-anchor="start" >0.61</text>
+<rect x="1049" y="212" width="183" height="60" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="1063" y="234" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Quota used</text>
+<text x="1063" y="260" font-size="20" font-weight="bold" fill="#222" text-anchor="start" >33 of 40</text>
+<text x="464" y="304" font-size="13" font-weight="bold" fill="#222" text-anchor="start" >Checks</text>
+<rect x="528" y="286" width="116" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="586.0" y="304" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Capacity: OK</text>
+<rect x="652" y="286" width="124" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="714.0" y="304" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Eligibility: OK</text>
+<rect x="784" y="286" width="128" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="848.0" y="304" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Uniqueness: OK</text>
+<rect x="920" y="286" width="116" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="978.0" y="304" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Stability: OK</text>
+<rect x="464" y="332" width="768" height="28" rx="0" fill="#f3f3f3" stroke="#ddd" />
+<text x="476" y="351" font-size="12" font-weight="bold" fill="#444" text-anchor="start" >Student</text>
+<text x="572" y="351" font-size="12" font-weight="bold" fill="#444" text-anchor="start" >Supervisor</text>
+<text x="742" y="351" font-size="12" font-weight="bold" fill="#444" text-anchor="start" >Rank in student's list</text>
+<text x="900" y="351" font-size="12" font-weight="bold" fill="#444" text-anchor="start" >Outcome</text>
+<line x1="464" y1="404" x2="1232" y2="404" stroke="#e2e2e2"/>
+<text x="476" y="387" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >S-001</text>
+<text x="572" y="387" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Supervisor A</text>
+<text x="742" y="387" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >1</text>
+<text x="900" y="387" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Assigned</text>
+<rect x="1140" y="368" width="84" height="28" rx="4" fill="#fff" stroke="#888" />
+<text x="1182.0" y="386.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle" >Reassign</text>
+<line x1="464" y1="448" x2="1232" y2="448" stroke="#e2e2e2"/>
+<text x="476" y="431" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >S-002</text>
+<text x="572" y="431" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Supervisor B</text>
+<text x="742" y="431" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >2</text>
+<text x="900" y="431" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Assigned</text>
+<rect x="1140" y="412" width="84" height="28" rx="4" fill="#fff" stroke="#888" />
+<text x="1182.0" y="430.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle" >Reassign</text>
+<line x1="464" y1="492" x2="1232" y2="492" stroke="#e2e2e2"/>
+<text x="476" y="475" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >S-003</text>
+<text x="572" y="475" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Supervisor A</text>
+<text x="742" y="475" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >1</text>
+<text x="900" y="475" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Assigned</text>
+<rect x="1140" y="456" width="84" height="28" rx="4" fill="#fff" stroke="#888" />
+<text x="1182.0" y="474.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle" >Reassign</text>
+<line x1="464" y1="536" x2="1232" y2="536" stroke="#e2e2e2"/>
+<text x="476" y="519" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >S-004</text>
+<text x="572" y="519" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >None</text>
+<text x="742" y="519" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >None</text>
+<text x="900" y="519" font-size="13" font-weight="bold" fill="#222" text-anchor="start" >Unmatched, all choices full</text>
+<rect x="1140" y="500" width="84" height="28" rx="4" fill="#fff" stroke="#888" />
+<text x="1182.0" y="518.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle" >Reassign</text>
+<line x1="464" y1="580" x2="1232" y2="580" stroke="#e2e2e2"/>
+<text x="476" y="563" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >S-005</text>
+<text x="572" y="563" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Supervisor D</text>
+<text x="742" y="563" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >3</text>
+<text x="900" y="563" font-size="13" font-weight="normal" fill="#222" text-anchor="start" >Assigned</text>
+<rect x="1140" y="544" width="84" height="28" rx="4" fill="#fff" stroke="#888" />
+<text x="1182.0" y="562.0" font-size="12" font-weight="normal" fill="#222" text-anchor="middle" >Reassign</text>
+<text x="464" y="604" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Showing 5 of 38 eligible students</text>
+<rect x="1090" y="588" width="64" height="24" rx="4" fill="#f0f0f0" stroke="#ccc" />
+<text x="1122.0" y="604.0" font-size="11" font-weight="normal" fill="#999" text-anchor="middle" >Previous</text>
+<rect x="1162" y="588" width="24" height="24" rx="4" fill="#eee" stroke="#666" />
+<text x="1174.0" y="604.0" font-size="11" font-weight="normal" fill="#222" text-anchor="middle" >1</text>
+<rect x="1192" y="588" width="40" height="24" rx="4" fill="#fff" stroke="#888" />
+<text x="1212.0" y="604.0" font-size="11" font-weight="normal" fill="#222" text-anchor="middle" >Next</text>
+<text x="464" y="646" font-size="13" font-weight="bold" fill="#222" text-anchor="start" >Quota usage by supervisor</text>
+<text x="1232" y="646" font-size="12" font-weight="normal" fill="#888" text-anchor="end" >Showing 5 of 25 supervisors</text>
+<text x="464" y="673" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >Supervisor A</text>
+<rect x="580" y="662" width="520" height="12" rx="2" fill="#f3f3f3" stroke="#ccc" />
+<rect x="580" y="662" width="520" height="12" rx="2" fill="#888" stroke="#888" />
+<text x="1120" y="673" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >5 of 5</text>
+<text x="464" y="695" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >Supervisor B</text>
+<rect x="580" y="684" width="520" height="12" rx="2" fill="#f3f3f3" stroke="#ccc" />
+<rect x="580" y="684" width="520" height="12" rx="2" fill="#888" stroke="#888" />
+<text x="1120" y="695" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >4 of 4</text>
+<text x="464" y="717" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >Supervisor C</text>
+<rect x="580" y="706" width="520" height="12" rx="2" fill="#f3f3f3" stroke="#ccc" />
+<rect x="580" y="706" width="260" height="12" rx="2" fill="#888" stroke="#888" />
+<text x="1120" y="717" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >3 of 6</text>
+<text x="464" y="739" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >Supervisor D</text>
+<rect x="580" y="728" width="520" height="12" rx="2" fill="#f3f3f3" stroke="#ccc" />
+<rect x="580" y="728" width="520" height="12" rx="2" fill="#888" stroke="#888" />
+<text x="1120" y="739" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >3 of 3</text>
+<text x="464" y="761" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >Supervisor E</text>
+<rect x="580" y="750" width="520" height="12" rx="2" fill="#f3f3f3" stroke="#ccc" />
+<rect x="580" y="750" width="208" height="12" rx="2" fill="#888" stroke="#888" />
+<text x="1120" y="761" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >2 of 5</text>
+<rect x="464" y="786" width="190" height="44" rx="6" fill="#222" stroke="#222" />
+<text x="559" y="814" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle" >Publish allocation</text>
+<rect x="666" y="786" width="120" height="44" rx="4" fill="#f0f0f0" stroke="#ccc" />
+<text x="726.0" y="812.0" font-size="14" font-weight="normal" fill="#999" text-anchor="middle" >Export CSV</text>
+<text x="800" y="813" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Available after publication.</text>
+<rect x="1092" y="786" width="140" height="44" rx="4" fill="#fff" stroke="#888" />
+<text x="1162.0" y="812.0" font-size="14" font-weight="normal" fill="#222" text-anchor="middle" >View audit log</text>
+</g>
+<g id="annotations">
+<circle cx="34" cy="300" r="11" fill="#222"/><text x="34" y="304" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">1</text>
+<circle cx="34" cy="460" r="11" fill="#222"/><text x="34" y="464" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<circle cx="34" cy="650" r="11" fill="#222"/><text x="34" y="654" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">3</text>
+<circle cx="428" cy="242" r="11" fill="#222"/><text x="428" y="246" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">4</text>
+<circle cx="428" cy="299" r="11" fill="#222"/><text x="428" y="303" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">5</text>
+<circle cx="428" cy="470" r="11" fill="#222"/><text x="428" y="474" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">6</text>
+<circle cx="1268" cy="400" r="11" fill="#222"/><text x="1268" y="404" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">7</text>
+<circle cx="428" cy="700" r="11" fill="#222"/><text x="428" y="704" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">8</text>
+<circle cx="428" cy="808" r="11" fill="#222"/><text x="428" y="812" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">9</text>
+<circle cx="1268" cy="808" r="11" fill="#222"/><text x="1268" y="812" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">10</text>
+</g>
+<text x="56" y="884" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Wireframe 3 of 3. Coordinator: allocation control panel. Sample data for illustration.</text>
+</svg>

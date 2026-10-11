@@ -37,6 +37,8 @@ A student writes the thesis proposal on the left. After submitting it, the right
 
 Each recommendation card shows the supervisor's name, research areas and approved capacity. Capacity is the figure the coordinator approved for the cycle (FR-03). Allocation runs as one batch after the deadline, so the screen has no live count of free places.
 
+The link Show all eligible supervisors under the cards opens the full list on screen 2. FR-06 lets a student rank any eligible supervisor, including ones outside the five recommendations.
+
 The supervisor names, scores, capacities and the model name in the wireframe are sample data.
 
 ### States to design

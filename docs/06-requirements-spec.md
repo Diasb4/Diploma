@@ -1,6 +1,8 @@
 # Requirements Specification
 
-**Task:** MAS-8 (user-provided identifier)  
+**Task:** [MAS-8](https://diploma-aitu-2027.youtrack.cloud/issue/MAS-8)  
+**Author:** Dias Tursynbai ([@Diasb4](https://github.com/Diasb4))  
+**Peer reviewer:** Nurzhan ([@Nurzhan-Zhumabekov](https://github.com/Nurzhan-Zhumabekov))  
 **Due:** October 14, 2026  
 **Project:** Multi-Criteria Academic Supervisor Assignment System (MAS)  
 **Status:** Proposed requirements baseline for peer and supervisor review
@@ -9,7 +11,7 @@
 
 MAS supports thesis-supervisor assignment at Astana IT University. Students submit proposals and ranked preferences, supervisors maintain research profiles and capacities, and department coordinators configure and review allocations.
 
-This specification derives from [README](../README.md) and [Pre-Defense Plan](../PRE_DEFENSE_PLAN.md). The plan assigns requirements to MAS-6 and UX prototypes to MAS-8; this document retains the task identifier requested by the user. The task identifier, owner, and reviewer must be reconciled in YouTrack before a PR is opened. The plan pairs MAS-6 with Dias as author and Nurzhan as reviewer, and MAS-8 with Nurzhan as author and Ardak as reviewer.
+This specification derives from the [README](../README.md) and is aligned with the project proposal submitted in [PR #8](https://github.com/Diasb4/Diploma/pull/8). It defines the proposed requirements for YouTrack task MAS-8. The assigned author is Dias Tursynbai and the peer reviewer is Nurzhan.
 
 The acceptance criteria below describe required future behavior, not completed implementation or verified stakeholder findings. Numeric thresholds and policy choices are proposed design targets pending supervisor review.
 
@@ -46,7 +48,7 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 | FR-10 | Must | A coordinator shall publish a validated allocation atomically; students and supervisors shall view only their authorized published results. | AC-F10 |
 | FR-11 | Must | A coordinator shall export the published allocation as CSV, including unmatched outcomes and cycle/run identifiers. | AC-F11 |
 | FR-12 | Must | The system shall record attributable audit events for policy, capacity, preference, allocation, and publication changes. | AC-F12 |
-| FR-13 | Should | A coordinator shall create a revised draft with a reasoned manual reassignment, subject to eligibility, single-assignment, and capacity checks; manual revisions shall trigger a new stability check and require explicit review before publication. | Integration tests of valid and invalid overrides; manual coordination is the fallback. |
+| FR-13 | Should | A coordinator shall create a revised draft with a reasoned manual reassignment, subject to eligibility, single-assignment, capacity, and stability checks. Publication shall require explicit coordinator review and zero blocking pairs against the same frozen rankings; a recorded reason shall not waive these checks. | Integration tests of valid and invalid revisions, including the publication checks in AC-F10; manual coordination is the fallback. |
 | FR-14 | Should | The system shall notify participants when results are published and display notification delivery failures to the coordinator. | Delivery test with a simulated failed channel; in-app result access is the fallback. |
 | FR-15 | Should | A coordinator shall compare semantic ranking against TF-IDF and evaluate allocations against historical manual, first-come, and seeded random baselines on the same eligible dataset. | Reproducible evaluation report with metric definitions and input versions; offline analysis is the fallback. |
 | FR-16 | Could | A coordinator shall compare draft allocation scenarios without modifying the active cycle or published results. | Scenario isolation integration test. |
@@ -89,9 +91,10 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 ### AC-F04 — Cycle configuration and freeze
 
 1. A coordinator can enroll students and supervisors and save a deadline with an explicit timezone; duplicate enrollment is rejected.
-2. A run cannot start without approved capacities, an approved ranking policy, and a frozen input snapshot. Enrollment, capacity, policy, and accepted student inputs are included in that snapshot.
+2. A run cannot start without approved capacities, an approved ranking policy, and a frozen input snapshot. The snapshot preserves the eligible rosters and pair eligibility, approved capacities, ranking-policy version, accepted proposals and ordered preferences, and supervisor research text used for scoring. When GPA has a positive weight, its values, source, and normalization scale are included. The snapshot also preserves the semantic scores and derived strict supervisor-side rankings, with the model and text-preprocessing versions that produced them. Matching uses these saved values rather than reading current profiles or grades.
 3. Students without a valid submitted proposal and preferences are reported as ineligible with a reason rather than silently assigned.
 4. Deadline enforcement uses server time and an inclusive closing rule: submissions at or after the deadline are rejected.
+5. Once frozen, a snapshot cannot be modified. Changes to live profiles, GPA, eligibility, capacities, or ranking policy do not change its saved inputs, scores, rankings, or results. An allocation using changed inputs requires a new snapshot identifier; previous snapshots remain available for authorized replay and audit.
 
 ### AC-F05 — Semantic recommendations
 
@@ -117,7 +120,7 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 
 1. For a frozen fixture, every student has zero or one assignment, every assigned supervisor is on that student's accepted list, and no supervisor exceeds approved capacity.
 2. With total capacity below demand, the run completes and explicitly records unmatched students; it never increases quotas to force a complete allocation.
-3. With strict candidate rankings and student preferences, an independent checker finds zero blocking pairs: an unassigned pair where the student prefers that supervisor to their result and the supervisor has room or prefers that student to an assigned student.
+3. With strict candidate rankings and student preferences, an independent checker finds zero blocking pairs: a mutually eligible pair on the student's accepted list that is not assigned together, where the student prefers that supervisor to their result and the supervisor has room or prefers that student to an assigned student. The checker uses the same frozen preferences, supervisor-side rankings, and capacities as the run.
 4. Multiple requests for the same run do not create duplicate assignments. A failed run exposes a failed status and no partially completed result.
 
 ### AC-F09 — Draft review
@@ -128,10 +131,11 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 
 ### AC-F10 — Publication and result visibility
 
-1. Publishing a draft with a failed hard-constraint validation is rejected without changing the currently published version.
+1. Publication requires completed, passing checks for capacity, eligibility, single assignment, and stability (zero blocking pairs under AC-F08). A missing or failed check rejects publication without changing the currently published version.
 2. Publishing a valid draft makes the complete version visible atomically and records the coordinator, timestamp, and run ID.
 3. A student sees their assigned supervisor or an explicit unmatched outcome. A supervisor sees only students assigned to them. Neither actor can retrieve another actor's restricted result.
 4. Repeated publication of the same version is idempotent. Publishing a replacement preserves the earlier version for coordinator audit.
+5. If manual reassignment is implemented, publication of a revised draft additionally requires a recorded reason and explicit coordinator review. A fixture that preserves capacity, eligibility, and single assignment but introduces a blocking pair is rejected even after that review. A revised draft with zero blocking pairs and all other checks passing can be published after the required review.
 
 ### AC-F11 — CSV export
 
@@ -174,12 +178,13 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 1. Five runs using the same frozen input, ranking policy, model version, and algorithm version return identical student-supervisor pairs and unmatched outcomes.
 2. Each run stores a snapshot identifier or hash, policy version, model identifier/version, algorithm version, and any random seed used.
 3. A fresh test environment with the recorded versions can replay a saved fixture and reproduce its allocation exactly.
+4. After freezing a fixture, changing a supervisor's live research text and a student's live GPA does not change an allocation replayed from that snapshot. The run references the saved scores and rankings and produces the same pairs and unmatched outcomes. A new snapshot records the changed inputs without overwriting the earlier one.
 
 ## 7. Domain rules and open decisions
 
 The proposed supervisor-side score is a weighted sum of normalized semantic similarity and normalized GPA. Student preference rank is expressed directly through the student-side preference list, avoiding an ambiguous combined score that could override expressed preferences. Only mutually eligible pairs are considered; coordinators approve cycle eligibility before freezing inputs. Stability is evaluated against that frozen instance and does not imply that all students receive their first choice or that workloads are equal.
 
-Supervisor review must confirm GPA policy and source, enrollment eligibility, proposal limits, deadlines, privacy/retention policy, and performance targets. These are proposed policies, not established university regulations. Final model and solver choices remain subject to MAS-5; any replacement solver must still satisfy the matching invariants and stability criterion or trigger an explicit requirements revision. Manual overrides are a Should feature because they can affect stability and require separate review.
+Supervisor review must confirm GPA policy and source, enrollment eligibility, proposal limits, deadlines, privacy/retention policy, and performance targets. These are proposed policies, not established university regulations. Final model and solver choices will be justified in docs/05-technology-selection.md; any replacement solver must still satisfy the matching invariants and stability criterion or trigger an explicit requirements revision. Manual reassignment is a Should feature. A revised draft is checked against the original frozen preferences, rankings, and capacities, and it cannot be published if it introduces a blocking pair. Coordinator review and a recorded reason do not override this rule. Changing the allocation inputs or the stability policy requires a separately reviewed decision rather than editing an existing snapshot.
 
 ## 8. Verification and delivery traceability
 
@@ -187,4 +192,4 @@ Each acceptance group links directly to its requirement ID. Future automated cas
 
 This specification contains 17 functional requirements (including one release exclusion), 8 non-functional requirements, and explicit criteria for all 17 Must requirements: FR-01–FR-12 and NFR-01–NFR-05. Acceptance of this document requires completeness and peer review; application acceptance requires executing the criteria against the implementation.
 
-Deliver through a MAS task branch and PR under the naming rules in PRE_DEFENSE_PLAN.md. Resolve the MAS-6/MAS-8 identifier discrepancy before selecting the author/reviewer pairing. Do not push directly to main or merge without the required team approval. Link the merged PR to the corresponding YouTrack task before marking it Done.
+Deliver changes through the MAS-8-Requirements-Specification branch and [PR #6](https://github.com/Diasb4/Diploma/pull/6), referencing YouTrack task MAS-8 in commit messages. Nurzhan reviews the updated requirements before merging. Do not push directly to main or merge without the required peer approval. Link the merged PR to MAS-8 and mark the task Done only after its acceptance criteria have been met.

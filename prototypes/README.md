@@ -14,7 +14,7 @@ The SVG files are the editable sources. The PNG files are exports at 2x size.
 | 2 | Preference list (ordered) | Student | [SVG](wireframes/02-student-preferences.svg), [PNG](wireframes/02-student-preferences.png) | Done |
 | 3 | Allocation control panel | Coordinator | [SVG](wireframes/03-coordinator-allocation.svg), [PNG](wireframes/03-coordinator-allocation.png) | Done |
 
-The REST API request and response examples are in [api-contracts.md](api-contracts.md). They are a draft for the backend to review. The interactive Figma prototype is still to be added.
+The REST API request and response examples are in [api-contracts.md](api-contracts.md). They are a draft for the backend to review. The interactive prototype is in [Figma](https://www.figma.com/design/9CgkSjXyeDTuWuDcsW6W8A), described in the last section.
 
 ## Screen 1: proposal editor with recommendations
 
@@ -166,3 +166,12 @@ Every control has a visible label. Check results and statuses are written out as
 - FR-13 does not say how the stability result of a manual change is shown or what explicit review looks like. The wireframe uses a form with a reason and leaves the confirmation step open.
 - The wireframe shows anonymous student IDs. Whether coordinators see names and GPA in this table depends on the privacy policy (NFR-01).
 - FR-14 (Should) wants notification delivery failures shown to the coordinator. The panel has no place for them yet.
+
+## Figma prototype
+
+[MAS UX prototype](https://www.figma.com/design/9CgkSjXyeDTuWuDcsW6W8A) holds the three screens as editable vector layers, imported from the SVG files in this folder. Two flows are set as starting points for Presentation view:
+
+- **Student: proposal and preferences.** On screen 1, Add to my list, Show all eligible supervisors and the Preferences tab open screen 2. The Proposal tab on screen 2 goes back to screen 1.
+- **Coordinator: allocation panel.** Screen 3 has no clicks. Its states are described in the section above.
+
+The SVG files in this folder stay the source. The Figma file was imported from them, so edits made in Figma are not copied back, and a changed screen has to be imported into Figma again. The file needs view access for the committee: Share, then anyone with the link can view.

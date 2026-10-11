@@ -74,7 +74,7 @@ Every academic year, thesis allocation runs into the same bottlenecks:
   - [x] Initial repository setup and branch conventions
   - [x] Project proposal and scope definition
   - [ ] Problem validation interviews (CustDev)
-  - [ ] Literature review of matching algorithms and NLP methods
+  - [x] Literature review of matching algorithms and NLP methods ([docs/03-literature-review.md](docs/03-literature-review.md))
   - [ ] System comparison and technology selection
   - [ ] Architecture diagrams (System Context, Use Case, Component)
   - [ ] UI wireframes and API specifications

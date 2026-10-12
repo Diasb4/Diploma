@@ -194,6 +194,7 @@ All requests below return 403 for students and supervisors (FR-01, AC-F09).
   "ranking_policy": {"ok": true, "version": "v3"},
   "snapshot": {
     "ok": true,
+    "id": "snap-0007",
     "frozen_at": "2026-11-15T12:00:01Z",
     "eligible_students": 38,
     "ineligible_students": 2
@@ -236,9 +237,33 @@ All requests below return 403 for students and supervisors (FR-01, AC-F09).
 
 The response is the new version, for example `"version": "v4"`. A bad sum returns 422 with the field code `weights_sum_invalid`.
 
+### Freeze a snapshot
+
+`POST /cycles/{cycle_id}/snapshots` has no body. It freezes the eligible rosters, approved capacities, ranking policy version, accepted proposals and preferences, and the data used for scoring (FR-04, AC-F04). It answers 201.
+
+```json
+{
+  "snapshot_id": "snap-0008",
+  "frozen_at": "2026-11-16T06:00:01Z",
+  "eligible_students": 38,
+  "ineligible_students": 2,
+  "policy_version": "v3"
+}
+```
+
+A frozen snapshot is never modified. Changed inputs need a new snapshot identifier, and earlier snapshots stay available for replay and audit (AC-F04).
+
 ### Run the matching
 
-`POST /cycles/{cycle_id}/runs` has no body. It starts the batch matching on the frozen snapshot (FR-08) and answers 202. Repeating the request for the same snapshot returns the existing run, so no duplicate assignments appear (AC-F08). If a readiness check fails, the answer is 409 `not_ready` with the failed checks in `fields`.
+`POST /cycles/{cycle_id}/runs` starts the batch matching on a frozen snapshot (FR-08) and answers 202. The body is optional. Without it the run uses the latest frozen snapshot.
+
+```json
+{
+  "snapshot_id": "snap-0007"
+}
+```
+
+Repeating the request for the same snapshot returns the existing run, so no duplicate assignments appear (AC-F08). If a readiness check fails, the answer is 409 `not_ready` with the failed checks in `fields`.
 
 ```json
 {
@@ -307,7 +332,7 @@ The response is the new version, for example `"version": "v4"`. A bad sum return
 
 ### Manual reassignment (Should, FR-13)
 
-`POST /cycles/{cycle_id}/runs/{run_id}/revisions` creates a revised draft. A reason is required. The new draft gets new validation and stability checks, and it must be reviewed before publication.
+`POST /cycles/{cycle_id}/runs/{run_id}/revisions` creates a revised draft. A reason is required. The new draft gets new eligibility, capacity, uniqueness and stability checks. Publishing it needs explicit coordinator review and zero blocking pairs against the same frozen rankings, and a recorded reason does not waive a failed check (FR-13, AC-F10).
 
 ```json
 {
@@ -321,7 +346,7 @@ The response is a run in `draft` status with a new `run_id` and a `revision_of` 
 
 ### Publish
 
-`POST /cycles/{cycle_id}/runs/{run_id}/publish` has no body. It publishes the whole validated draft in one step (FR-10, AC-F10).
+`POST /cycles/{cycle_id}/runs/{run_id}/publish` publishes the whole validated draft in one step (FR-10, AC-F10). The body is needed only for a revised draft, where it carries the explicit review: `{"reviewed": true}`. Without it the answer is 409 `review_required`.
 
 ```json
 {
@@ -333,7 +358,7 @@ The response is a run in `draft` status with a new `run_id` and a `revision_of` 
 }
 ```
 
-A draft with a failed hard check returns 409 `validation_failed`, lists the failed checks in `fields`, and leaves the published version unchanged. Publishing the same version again returns the same response.
+A draft with a failed check, or a check that has not completed, returns 409 `validation_failed`, lists those checks in `fields`, and leaves the published version unchanged (AC-F10). Publishing the same version again returns the same response.
 
 ### Export
 
@@ -376,5 +401,6 @@ S-017,,ineligible,no_submitted_proposal,cyc-2026-27,R-0042
 - FR-05 ties recommendations to a submitted proposal, so a draft gets 409. A preview for drafts would need a rule.
 - The run is assumed to be asynchronous: 202 and polling. If NFR-03 is met with a synchronous call, `POST .../runs` can return the finished run.
 - Repeated `POST .../runs` for one snapshot returns the existing run. An `Idempotency-Key` header is the alternative.
+- A run takes an optional `snapshot_id` and defaults to the latest frozen snapshot. The explicit review of a revised draft is a `reviewed` flag on publish. Both are proposals.
 - The coordinator responses use anonymous student ids. Names and GPA in these responses depend on the privacy policy (NFR-01).
 - Pagination uses `page` and `page_size`. Cursor-based paging is the alternative.

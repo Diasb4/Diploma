@@ -125,11 +125,11 @@ The coordinator checks that a run can start, starts it, reviews the draft and pu
 | 2 | Run allocation | Starts the batch matching on the frozen snapshot (FR-08). Disabled until the three checks pass. Repeated requests for the same run create no duplicate assignments, and a failed run shows a failed status without a partial result (AC-F08). |
 | 3 | Ranking policy | Two weights, semantic match and optional GPA, each 0 or more and adding up to 1 within 0.000001. Save as new version creates a new immutable version, and a run keeps the version it started with. If GPA has a positive weight and a record has no GPA, the run is blocked and the affected records are named (AC-F07). |
 | 4 | Summary figures | Assigned, unmatched, first-choice satisfaction and quota used for the draft (FR-09). Satisfaction counts eligible unmatched students in the denominator and shows N/A when the denominator is empty (AC-F09). |
-| 5 | Validation checks | Capacity, eligibility, uniqueness and stability results for the draft (AC-F09). A failed hard check blocks publication (AC-F10). |
+| 5 | Validation checks | Capacity, eligibility, uniqueness and stability results for the draft (AC-F09). A failed check, or one that has not completed, blocks publication (AC-F10). |
 | 6 | Assignment table | Every eligible student with the assigned supervisor, the position of that supervisor in the student's list, and the outcome. Unmatched students stay in the table with an explicit outcome (AC-F08, AC-F09). |
-| 7 | Reassign | Opens a form with the new supervisor and a required reason. The result is a revised draft that gets new eligibility, capacity, uniqueness and stability checks and needs explicit review before publication (FR-13, a Should requirement). |
+| 7 | Reassign | Opens a form with the new supervisor and a required reason. The result is a revised draft that gets new eligibility, capacity, uniqueness and stability checks. Publishing it needs explicit coordinator review and zero blocking pairs against the same frozen rankings, and a recorded reason does not waive a failed check (FR-13, a Should requirement). |
 | 8 | Quota usage | Assigned count against approved capacity for each supervisor (FR-09). |
-| 9 | Publish allocation | Publishes the validated draft in one step and records the coordinator, time and run ID (FR-10, AC-F10). Disabled while a hard check fails. Publishing the same version again changes nothing. |
+| 9 | Publish allocation | Publishes the validated draft in one step and records the coordinator, time and run ID (FR-10, AC-F10). Disabled while a check has failed or has not completed. Publishing the same version again changes nothing. |
 | 10 | Export CSV and View audit log | The export has one row per enrolled student with the supervisor or an empty value, the outcome or reason, the cycle ID and the run ID (FR-11, AC-F11). It stays disabled until a result is published. The audit log lists events with actor, action, time, entity and version or run ID (FR-12, AC-F12). |
 
 Cycle creation, enrollment, the deadline and the approval of capacities (FR-03, FR-04) have their own views, which are not drawn here. The student identifiers, supervisor names, counts and the run number in the wireframe are sample data.
@@ -140,7 +140,7 @@ Cycle creation, enrollment, the deadline and the approval of capacities (FR-03, 
 - **Running:** Run allocation is disabled and the status chip reads Running.
 - **Failed:** the status chip reads Failed with the reason. No partial result is shown and Run allocation becomes available again (AC-F08).
 - **Draft ready:** as drawn.
-- **Validation failed:** the failed check shows its reason and the affected students. Publish allocation is disabled (AC-F10).
+- **Validation failed or incomplete:** the failed check shows its reason and the affected students, and a check that has not run is marked as missing. Publish allocation is disabled in both cases (AC-F10).
 - **Revised draft:** after a manual reassignment the panel shows a banner that review is required and repeats the checks (FR-13).
 - **Published:** the status chip shows the publication time, version and run ID. Publish allocation is disabled and Export CSV is enabled (AC-F10, AC-F11).
 - **No eligible students:** first-choice satisfaction shows N/A (AC-F09).
@@ -162,8 +162,8 @@ Every control has a visible label. Check results and statuses are written out as
 ### Open questions
 
 - AC-F04 requires an approved ranking policy and approved capacities. Whether saving a policy version also approves it, or approval is a separate step, is not defined.
-- The snapshot includes the policy and the capacities (AC-F04), and NFR-05 says identical frozen inputs give identical assignments. What Run allocation does once a draft exists needs a decision, because a changed policy needs a new freeze first.
-- FR-13 does not say how the stability result of a manual change is shown or what explicit review looks like. The wireframe uses a form with a reason and leaves the confirmation step open.
+- AC-F04 says a frozen snapshot is never modified, changed inputs need a new snapshot identifier, and earlier snapshots stay available for replay and audit. The wireframe shows only the current snapshot. Where the coordinator creates a new snapshot and chooses one for a run is open: this panel or the cycle view.
+- FR-13 requires explicit coordinator review and zero blocking pairs for a revised draft. It does not say what the review looks like or how a blocking pair is shown. The wireframe uses a form with a reason and leaves the confirmation step open. The API draft proposes a `reviewed` flag on publish.
 - The wireframe shows anonymous student IDs. Whether coordinators see names and GPA in this table depends on the privacy policy (NFR-01).
 - FR-14 (Should) wants notification delivery failures shown to the coordinator. The panel has no place for them yet.
 

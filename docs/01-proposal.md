@@ -75,7 +75,7 @@ Students retain control of their submitted preference order. Recommendations do 
 
 ### 6.1 Mandatory MVP
 
-The MVP supports a single department's allocation cycle, with enrolled students and supervisors, a submission deadline, and a frozen input snapshot. Its mandatory capabilities are:
+The MVP supports a single department's allocation cycle, with enrolled students and supervisors, a submission deadline, and a frozen input snapshot. Authentication uses authorized MAS test accounts; MAS manages sessions, role assignments, and record ownership. University SSO is excluded from the MVP. Its mandatory capabilities are:
 
 - Authentication and authorization for Student, Supervisor, and Coordinator roles, including ownership checks on proposals and results.
 - One student proposal per cycle, containing title, abstract, and keywords, with validation and submission before the deadline.
@@ -205,8 +205,8 @@ These are the proposal's feasibility constraints. The detailed risk register, de
 
 | Milestone | Completion condition |
 |---|---|
-| First pre-defense submission — 23 October 2026 | Reviewed analysis and design artifacts are merged; YouTrack links identify the work and responsible students; `pre-defense-1` identifies the submitted version; the summary gives the repository link, tag, completed work, limitations, and outstanding tasks. |
-| First pre-defense — 24 October 2026 | The committee can inspect the submitted package, progressive individual contributions, review comments, and resulting revisions. |
+| Pre-defense preparation - before 15 October 2026 | Reviewed analysis and design materials support one PowerPoint presentation covering all nine assigned tasks, with each team member's contribution identified. |
+| Pre-defense presentation submission - 15 October 2026 | Upload only the PowerPoint presentation in the comments under the assignment post. Each team member is ready to explain their contributions; a fully functional application is not required at this stage. |
 | Implementation baseline | The mandatory workflow runs end to end on synthetic fixtures and passes hard-constraint and authorization checks. |
 | Evaluation baseline | The selected model and solver are evaluated against declared baselines, with reproducible inputs and measured results. |
 | Final diploma submission | The application, documentation, tests, evaluation, and supervisor-reviewed limitations form a reproducible release. |

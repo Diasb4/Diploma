@@ -149,9 +149,11 @@ Errors:
 ```json
 {
   "supervisor_ids": ["sup-0005", "sup-0003", "sup-0009"],
-  "submitted_at": "2026-10-18T09:12:40Z"
+  "accepted_at": "2026-10-18T09:12:40Z"
 }
 ```
+
+`accepted_at` is the server-recorded acceptance time of the list. The server also uses it as a tie-breaker in the supervisor-side ranking (AC-F07), so a client cannot send or change it.
 
 ### Submit the list
 
@@ -163,7 +165,7 @@ Errors:
 }
 ```
 
-The response has the same shape as the read. An invalid list is rejected as a whole and the last accepted list stays unchanged (AC-F06). Possible field codes: `list_empty`, `too_many_entries`, `duplicate_supervisor`, `supervisor_not_eligible`.
+The response has the same shape as the read. A valid resubmission replaces the list and records a new acceptance time. An invalid list is rejected as a whole, and the last accepted list and its time stay unchanged (AC-F06). Possible field codes: `list_empty`, `too_many_entries`, `duplicate_supervisor`, `supervisor_not_eligible`.
 
 ```json
 {
@@ -215,31 +217,39 @@ All requests below return 403 for students and supervisors (FR-01, AC-F09).
 
 ### Ranking policy
 
-`GET /cycles/{cycle_id}/ranking-policy` returns the active version.
+`GET /cycles/{cycle_id}/ranking-policy` returns the active version. The three weights are topic fit (semantic match), student preference rank and optional GPA (FR-07, section 7 of the requirements).
 
 ```json
 {
   "version": "v3",
-  "semantic_weight": 0.8,
+  "topic_weight": 0.5,
+  "preference_weight": 0.3,
   "gpa_weight": 0.2,
+  "gpa_approved": true,
+  "gpa_enabled": true,
+  "tie_breaking": ["combined_score", "gpa", "list_accepted_at", "student_id"],
   "approved": true
 }
 ```
 
-`POST /cycles/{cycle_id}/ranking-policy` creates a new immutable version (FR-07, AC-F07). Weights are 0 or more and add up to 1 within 0.000001.
+`tie_breaking` is read-only and lists the order from AC-F07. The `gpa` step applies only when GPA is enabled.
+
+`POST /cycles/{cycle_id}/ranking-policy` creates a new immutable version (FR-07, AC-F07). Weights are 0 or more and add up to 1 within 0.000001. Until GPA use is approved and enabled, `gpa_weight` must be 0.
 
 ```json
 {
-  "semantic_weight": 0.7,
-  "gpa_weight": 0.3
+  "topic_weight": 0.6,
+  "preference_weight": 0.4,
+  "gpa_weight": 0.0,
+  "gpa_enabled": false
 }
 ```
 
-The response is the new version, for example `"version": "v4"`. A bad sum returns 422 with the field code `weights_sum_invalid`.
+The response is the new version, for example `"version": "v4"`. A bad sum returns 422 with the field code `weights_sum_invalid`. A positive `gpa_weight` while GPA is not enabled returns 422 with `gpa_not_enabled`.
 
 ### Freeze a snapshot
 
-`POST /cycles/{cycle_id}/snapshots` has no body. It freezes the eligible rosters, approved capacities, ranking policy version, accepted proposals and preferences, and the data used for scoring (FR-04, AC-F04). It answers 201.
+`POST /cycles/{cycle_id}/snapshots` has no body. It freezes the eligible rosters, approved capacities, ranking policy version, accepted proposals, preferences with their acceptance times, and the data used for scoring (FR-04, AC-F04). It answers 201.
 
 ```json
 {
@@ -263,13 +273,14 @@ A frozen snapshot is never modified. Changed inputs need a new snapshot identifi
 }
 ```
 
-Repeating the request for the same snapshot returns the existing run, so no duplicate assignments appear (AC-F08). If a readiness check fails, the answer is 409 `not_ready` with the failed checks in `fields`.
+Repeating the request for the same snapshot returns the existing run, so no duplicate assignments appear (AC-F08). If a readiness check fails, the answer is 409 `not_ready` with the failed checks in `fields`. If GPA is enabled and a record has a missing or out-of-range GPA, the answer is 409 `gpa_data_invalid` with the affected students in `fields` (AC-F07). The run saves the algorithm version of the student-proposing Gale-Shapley solver (AC-F08).
 
 ```json
 {
   "run_id": "R-0042",
   "status": "running",
   "policy_version": "v3",
+  "algorithm_version": "gale-shapley-sp-v1",
   "model_version": "sample-v1",
   "snapshot_id": "snap-0007"
 }
@@ -282,6 +293,7 @@ Repeating the request for the same snapshot returns the existing run, so no dupl
   "run_id": "R-0042",
   "status": "draft",
   "policy_version": "v3",
+  "algorithm_version": "gale-shapley-sp-v1",
   "model_version": "sample-v1",
   "snapshot_id": "snap-0007",
   "summary": {

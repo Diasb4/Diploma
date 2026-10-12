@@ -82,7 +82,7 @@ A student orders one to five supervisors. The list on the left is the one that g
 | 2 | Up and Down | Move a row by one place. They give a keyboard and pointer alternative to dragging (NFR-04). Up is disabled on the first row and Down on the last. |
 | 3 | Remove | Takes the supervisor out of the list and frees the slot. |
 | 4 | Empty slot | A free position. The list has five positions in total. |
-| 5 | Submit preferences | Checks the whole list and replaces the previous one. A valid list has one to five distinct eligible supervisors. An invalid list is rejected as a whole (AC-F06). |
+| 5 | Submit preferences | Checks the whole list and replaces the previous one. A valid list has one to five distinct eligible supervisors. An invalid list is rejected as a whole (AC-F06). The server records the acceptance time of the list, which also breaks ties in the supervisor-side ranking (AC-F07). |
 | 6 | Add | Puts the supervisor in the first free slot. The button reads Added for supervisors already in the list, and every Add button is disabled when five are chosen. |
 | 7 | Deadline | Preference deadline with its time zone, taken from the cycle settings (FR-04). The server clock decides. |
 | 8 | Validation message | Plain text above the list and linked to the row it concerns. It covers an empty list, a duplicate, more than five entries and an ineligible supervisor. The last accepted list stays unchanged. |
@@ -101,7 +101,7 @@ The right-hand list starts with the supervisors recommended for the student's pr
 
 ### Data the screen needs
 
-- The student's accepted list: ordered supervisor ids and the submission time.
+- The student's accepted list: ordered supervisor ids and the acceptance time.
 - The eligible supervisors: id, name, approved capacity, and the similarity score for the recommended ones.
 - The cycle: preference deadline with time zone, and whether inputs are frozen.
 
@@ -110,6 +110,7 @@ The right-hand list starts with the supervisors recommended for the student's pr
 - FR-06 speaks of submitting a list. Whether a student can save an unsubmitted draft of the list is open. The wireframe treats every submission as a replacement.
 - Whether Add to my list on screen 1 changes the submitted list at once or only the draft shown on this screen.
 - FR-05 returns scores for up to five supervisors. Whether scores are shown for the other eligible supervisors needs a decision. The wireframe shows capacity only.
+- A resubmission records a new acceptance time and can lose a tie in the supervisor-side ranking. Whether the screen warns about this is open. Section 7 of the requirements asks the supervisor review to confirm the effect of resubmission.
 
 ## Screen 3: coordinator allocation panel
 
@@ -122,8 +123,8 @@ The coordinator checks that a run can start, starts it, reviews the draft and pu
 | # | Element | Behavior |
 |---|---|---|
 | 1 | Readiness checks | Three conditions for a run: capacities approved (FR-03), ranking policy approved (FR-07) and input snapshot frozen (FR-04). Each card shows its state. A link opens the ineligible students with a reason for each (AC-F04). |
-| 2 | Run allocation | Starts the batch matching on the frozen snapshot (FR-08). Disabled until the three checks pass. Repeated requests for the same run create no duplicate assignments, and a failed run shows a failed status without a partial result (AC-F08). |
-| 3 | Ranking policy | Two weights, semantic match and optional GPA, each 0 or more and adding up to 1 within 0.000001. Save as new version creates a new immutable version, and a run keeps the version it started with. If GPA has a positive weight and a record has no GPA, the run is blocked and the affected records are named (AC-F07). |
+| 2 | Run allocation | Starts the student-proposing Gale-Shapley matching on the frozen snapshot (FR-08). Disabled until the three checks pass. Repeated requests for the same run create no duplicate assignments, a failed run shows a failed status without a partial result, and the run records the algorithm version (AC-F08). |
+| 3 | Ranking policy | Three weights, topic fit (semantic match), preference rank and optional GPA, each 0 or more and adding up to 1 within 0.000001. The policy records whether GPA use is approved and enabled. Until it is enabled, the GPA weight must be 0 and GPA is skipped in tie-breaking. Ties are broken by enabled GPA, then the acceptance time of the student's list, then student ID. Save as new version creates a new immutable version, and a run keeps the version it started with. If GPA is enabled and a record has no GPA, the run is blocked and the affected records are named (AC-F07). |
 | 4 | Summary figures | Assigned, unmatched, first-choice satisfaction and quota used for the draft (FR-09). Satisfaction counts eligible unmatched students in the denominator and shows N/A when the denominator is empty (AC-F09). |
 | 5 | Validation checks | Capacity, eligibility, uniqueness and stability results for the draft (AC-F09). A failed check, or one that has not completed, blocks publication (AC-F10). |
 | 6 | Assignment table | Every eligible student with the assigned supervisor, the position of that supervisor in the student's list, and the outcome. Unmatched students stay in the table with an explicit outcome (AC-F08, AC-F09). |
@@ -132,7 +133,7 @@ The coordinator checks that a run can start, starts it, reviews the draft and pu
 | 9 | Publish allocation | Publishes the validated draft in one step and records the coordinator, time and run ID (FR-10, AC-F10). Disabled while a check has failed or has not completed. Publishing the same version again changes nothing. |
 | 10 | Export CSV and View audit log | The export has one row per enrolled student with the supervisor or an empty value, the outcome or reason, the cycle ID and the run ID (FR-11, AC-F11). It stays disabled until a result is published. The audit log lists events with actor, action, time, entity and version or run ID (FR-12, AC-F12). |
 
-Cycle creation, enrollment, the deadline and the approval of capacities (FR-03, FR-04) have their own views, which are not drawn here. The student identifiers, supervisor names, counts and the run number in the wireframe are sample data.
+Cycle creation, enrollment, the deadline and the approval of capacities (FR-03, FR-04) have their own views, which are not drawn here. The evaluation reports of FR-15 (a Should feature) are not drawn either. The student identifiers, supervisor names, counts and the run number in the wireframe are sample data.
 
 ### States to design
 
@@ -140,6 +141,7 @@ Cycle creation, enrollment, the deadline and the approval of capacities (FR-03, 
 - **Running:** Run allocation is disabled and the status chip reads Running.
 - **Failed:** the status chip reads Failed with the reason. No partial result is shown and Run allocation becomes available again (AC-F08).
 - **Draft ready:** as drawn.
+- **GPA not enabled:** the GPA box is unchecked and its weight is fixed at 0.00. GPA is skipped in tie-breaking (AC-F07).
 - **Validation failed or incomplete:** the failed check shows its reason and the affected students, and a check that has not run is marked as missing. Publish allocation is disabled in both cases (AC-F10).
 - **Revised draft:** after a manual reassignment the panel shows a banner that review is required and repeats the checks (FR-13).
 - **Published:** the status chip shows the publication time, version and run ID. Publish allocation is disabled and Export CSV is enabled (AC-F10, AC-F11).
@@ -154,8 +156,8 @@ Every control has a visible label. Check results and statuses are written out as
 
 - The cycle: id, status and the snapshot time with time zone.
 - Readiness: number of approved capacities, the approved policy version, snapshot counts and the list of ineligible students with reasons.
-- The active policy: version, semantic weight and GPA weight.
-- The run: id, status, policy version, model version and snapshot id.
+- The active policy: version, the three weights, whether GPA use is approved and enabled, and the tie-breaking order.
+- The run: id, status, policy version, algorithm version, model version and snapshot id.
 - The draft: summary figures, validation results, one row per eligible student (student id, supervisor id, rank in the student's list, outcome or reason) and quota usage for each supervisor.
 - The publication: version, time and coordinator.
 
@@ -166,6 +168,7 @@ Every control has a visible label. Check results and statuses are written out as
 - FR-13 requires explicit coordinator review and zero blocking pairs for a revised draft. It does not say what the review looks like or how a blocking pair is shown. The wireframe uses a form with a reason and leaves the confirmation step open. The API draft proposes a `reviewed` flag on publish.
 - The wireframe shows anonymous student IDs. Whether coordinators see names and GPA in this table depends on the privacy policy (NFR-01).
 - FR-14 (Should) wants notification delivery failures shown to the coordinator. The panel has no place for them yet.
+- The preference rank enters the score as 1 divided by the position in the student's list (section 7 of the requirements). The panel shows only its weight. The supervisor review still has to confirm the normalization and the weights.
 
 ## Figma prototype
 

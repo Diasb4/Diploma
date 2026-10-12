@@ -63,26 +63,30 @@ The final choice between bge-m3 and MiniLM is confirmed by the Top-k Recall comp
 | Option | How it works | Pros | Cons |
 |---|---|---|---|
 | Gale-Shapley (student-proposing) | Students apply to supervisors in the order of their lists; each supervisor keeps the best applicants up to capacity and rejects the rest | Always stable; gives every student the best result possible among stable allocations; simple and fast | Does not directly maximize any overall score |
-| ILP with PuLP | Describes the allocation as an optimization problem (maximize total satisfaction under capacity limits) and solves it with a solver | Can optimize any linear goal, for example the total satisfaction of students | Does not consider which students the supervisors prefer, so the result can be unstable; slower; needs a separate solver |
+| ILP with PuLP | Describes the allocation as an optimization problem (for example, maximize total satisfaction under capacity limits) and solves it with a solver | Can optimize any linear goal; supervisors' preferences and stability can be added as extra constraints [Manlove et al., 2022] | Slower and more complex than Gale-Shapley; needs a separate solver; a model without stability constraints can produce unstable results |
 | Greedy heuristic | Takes student-supervisor pairs from the highest topic score down and assigns them while capacity is left | Very simple and fastest | No stability and no optimality guarantee |
 
 ### 3.2 Experiment
 
-To compare the algorithms on equal terms, we ran them on the synthetic dataset from section 5 of the verification plan: 200 students, 25 supervisors in 5 research areas, capacities from 6 to 10, and preference lists of 1 to 5 supervisors. Each scenario was run with 5 random seeds, and the table shows the mean. The supervisor-side ranking uses topic similarity, with equal scores resolved by student ID. The ILP maximizes preference satisfaction (5 points for a first choice, down to 1 point for a fifth choice) under the capacity limits.
+To compare the algorithms on equal terms, we ran them on the synthetic dataset from section 5 of the verification plan: 200 students, 25 supervisors in 5 research areas, capacities from 6 to 10, and preference lists of 1 to 5 supervisors. Each scenario was run with 5 random seeds, and the table shows the mean.
 
-The script is [experiments/allocation_comparison.py](../experiments/allocation_comparison.py). It was run on 4 CPU cores (Intel Xeon, 2.8 GHz) with Python 3.13, PuLP 4.0.0, the HiGHS solver (highspy 1.15.1) and NumPy 2.5.4. Repeated runs gave the same metrics.
+The experiment is a simplified scenario with its own ranking policy, not the full policy of AC-F07. Supervisors rank students by topic similarity only: there is no preference-rank term, GPA is not used, and no submission times are simulated. Equal scores are resolved by the lower student ID. The comparison with the full policy belongs to the evaluation in the verification plan.
+
+The ILP in this experiment is an ILP without stability constraints. It maximizes preference satisfaction (5 points for a first choice, down to 1 point for a fifth choice) under the capacity limits and does not include the supervisors' preferences. It shows what happens when stability is not required, not the best that an ILP can do.
+
+The script is [experiments/allocation_comparison.py](../experiments/allocation_comparison.py), and its library versions are pinned in [experiments/requirements.txt](../experiments/requirements.txt). It was run on 4 CPU cores (Intel Xeon, 2.8 GHz) with Python 3.13, PuLP 4.0.0, the HiGHS solver (highspy 1.15.1) and NumPy 2.5.4. Repeated runs gave the same metrics. PuLP 4.0 and NumPy 2.5 need Python 3.12 or newer, while the backend uses Python 3.11 (README). The experiment therefore runs in its own virtual environment, as described at the top of the script.
 
 Main scenario (220 places for 200 students). For 30% of the students the generator moves one of three popular supervisors to the first place; together with students who chose them by topic, about 40% of all students rank a popular supervisor first:
 
 | Method | Coverage | First-choice satisfaction | Mean preference rank | Mean topic score | Blocking pairs | Time |
 |---|---|---|---|---|---|---|
 | Gale-Shapley | 0.91 | 0.54 | 1.56 | 0.82 | 0 | under 0.01 s |
-| ILP (PuLP) | 0.97 | 0.65 | 1.45 | 0.75 | 97 | about 0.1 s |
+| ILP without stability constraints | 0.97 | 0.65 | 1.45 | 0.75 | 97 | about 0.1 s |
 | Greedy by topic score | 0.91 | 0.34 | 2.18 | 0.84 | 85 | about 0.001 s |
 
 The other scenarios showed the same pattern:
 
-| Scenario | Gale-Shapley (coverage / first choice / blocking pairs) | ILP (PuLP) | Greedy |
+| Scenario | Gale-Shapley (coverage / first choice / blocking pairs) | ILP without stability constraints | Greedy |
 |---|---|---|---|
 | Shortage: 180 places | 0.83 / 0.45 / 0 | 0.86 / 0.61 / 158 | 0.83 / 0.31 / 58 |
 | Popular supervisors: the generator moves a popular supervisor to the first place for 60% of students (about 66% rank one first) | 0.91 / 0.34 / 0 | 0.97 / 0.44 / 144 | 0.91 / 0.20 / 84 |
@@ -99,7 +103,7 @@ We use student-proposing Gale-Shapley as the main algorithm.
 
 The other options keep a role:
 
-- The ILP shows the cost of stability. It reached higher coverage and first-choice satisfaction, but with about 100 to 160 blocking pairs and a lower topic score, because it ignores the supervisors' side. It is used only in the evaluation (AC-F15).
+- The ILP without stability constraints shows the cost of stability. It reached higher coverage and first-choice satisfaction, but with about 100 to 160 blocking pairs and a lower topic score, because its model does not include the supervisors' preferences. An ILP with stability constraints is possible [Manlove et al., 2022], but by the result of Gale and Shapley it cannot give the students a better stable allocation than Gale-Shapley does. The ILP is therefore used only in the evaluation (AC-F15).
 - The greedy heuristic is a simple baseline. It had the lowest first-choice satisfaction and many blocking pairs.
 
 We use PuLP for the ILP because it is a free Python library that fits our Python backend. In PuLP 4.0 a plain installation contains only the modelling layer, and a solver has to be installed separately. We use the open-source HiGHS solver through the highspy package and pin both versions.
@@ -110,7 +114,7 @@ We use PuLP for the ILP because it is a free Python library that fits our Python
 
 | Option | How it works | Pros | Cons |
 |---|---|---|---|
-| PostgreSQL with pgvector | A relational database with an extension that adds a vector column type and similarity search | One database for users, cycles, preferences, snapshots, results, audit records and embeddings; transactions, foreign keys and unique constraints; cosine distance search; HNSW and IVFFlat indexes for vectors of up to 2,000 dimensions | Vector search is less specialized than in a dedicated vector database, which matters only for millions of vectors |
+| PostgreSQL with pgvector | A relational database with an extension that adds a vector column type and similarity search | One database for users, cycles, preferences, snapshots, results, audit records and embeddings; transactions, foreign keys, unique constraints and row locks; cosine distance search; HNSW and IVFFlat indexes for vectors of up to 2,000 dimensions | Vector search is less specialized than in a dedicated vector database, which matters only for millions of vectors |
 | ChromaDB | A dedicated open-source vector database (Apache 2.0) that runs embedded or as a server | Easy to start; built for embeddings; metadata filtering | Stores embeddings with their texts and metadata, but not relational data, so a second database is still needed for users, preferences and results; keeping two stores consistent makes input freezing and atomic publication harder |
 | MongoDB (NoSQL) | A document database with vector search, available in the Atlas cloud service and, since June 2026, in the self-managed Community Edition | Flexible documents; supports multi-document transactions | Vector search runs in a separate search process (mongot) next to the database; the search component is licensed under the SSPL; rules such as "one supervisor per student" and capacity limits are easier to enforce with relational constraints |
 
@@ -118,7 +122,9 @@ We use PuLP for the ILP because it is a free Python library that fits our Python
 
 We use PostgreSQL 16 with the pgvector extension.
 
-- Integrity. Duplicate assignments and capacity violations must be rejected even if a request bypasses the user interface, and publication must be atomic (NFR-02, AC-N02). Relational transactions and constraints do this directly.
+- Integrity. Duplicate assignments and capacity violations must be rejected even if a request bypasses the user interface, and publication must be atomic (NFR-02, AC-N02). PostgreSQL handles the two rules in different ways:
+  - One supervisor per student is a UNIQUE constraint on the student in each allocation run, so the database itself rejects a second assignment.
+  - Capacity cannot be a simple CHECK constraint, because a CHECK constraint only sees the row being written and cannot count the other assignments of the same supervisor. Instead, every write of assignments happens in one transaction that first locks the affected supervisor rows with SELECT ... FOR UPDATE, then counts their assignments and rejects the change if a capacity would be exceeded. The lock makes a second parallel transaction wait until the first one is finished, so two writes cannot both pass the check. The batch allocation and the publication are each written in a single transaction, so a failure leaves no partial result.
 - One store. Embeddings, proposals and frozen snapshots live in the same database and the same transaction. This makes it simple to freeze inputs and replay a run with exactly the same data (AC-F04, NFR-05).
 - Enough for our size. A cycle has about 25 supervisor profiles and 200 proposals. pgvector can search such a small set exactly without any index, and its indexes support up to 2,000 dimensions, which covers bge-m3 (1024) and the OpenAI model (1536).
 - Team familiarity. PostgreSQL is already part of the planned stack in the README, so the team needs to learn only one extension.
@@ -130,7 +136,7 @@ ChromaDB or MongoDB would make sense if the system had to search millions of doc
 | Area | Chosen tool | Role of the other options | Main reason |
 |---|---|---|---|
 | NLP model | Sentence-Transformers with BAAI/bge-m3 (fallback: paraphrase-multilingual-MiniLM-L12-v2) | TF-IDF as baseline; OpenAI API only in the offline comparison | Local processing, long inputs, multilingual support |
-| Allocation | Student-proposing Gale-Shapley | ILP (PuLP with HiGHS) and greedy for comparison | Stable, best stable result for students, fast |
+| Allocation | Student-proposing Gale-Shapley | ILP (PuLP with HiGHS) and greedy for comparison in the evaluation | Stable, best stable result for students, fast |
 | Storage | PostgreSQL 16 with pgvector | ChromaDB and MongoDB not used | One transactional store for data and embeddings |
 
 ## 6. Risks and Checks
@@ -143,12 +149,15 @@ ChromaDB or MongoDB would make sense if the system had to search millions of doc
 ## References
 
 - Gale, D., & Shapley, L. S. (1962). College admissions and the stability of marriage. *The American Mathematical Monthly*, 69(1), 9-15.
+- Manlove, D., Milne, D., & Olaosebikan, S. (2022). Student-project allocation with preferences over projects: Algorithmic and experimental results. *Discrete Applied Mathematics*, 308, 220-234. (IP model with constraints that exclude blocking pairs, section 5.)
 - Chen, J., Xiao, S., Zhang, P., Luo, K., Lian, D., & Liu, Z. (2024). M3-Embedding: Multi-linguality, multi-functionality, multi-granularity text embeddings through self-knowledge distillation. In *Findings of ACL 2024*. https://arxiv.org/abs/2402.03216
 - Sentence-Transformers documentation, pretrained models (list of training languages of the multilingual models): https://www.sbert.net/docs/sentence_transformer/pretrained_models.html
 - paraphrase-multilingual-MiniLM-L12-v2 model card and configuration: https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
 - BAAI/bge-m3 model card: https://huggingface.co/BAAI/bge-m3
 - OpenAI, how the API handles data: https://developers.openai.com/api/docs/guides/your-data
 - pgvector: https://github.com/pgvector/pgvector
+- PostgreSQL documentation, check constraints: https://www.postgresql.org/docs/16/ddl-constraints.html
+- PostgreSQL documentation, explicit locking (row-level locks): https://www.postgresql.org/docs/16/explicit-locking.html
 - Chroma: https://www.trychroma.com/
 - MongoDB, Search and Vector Search for Community Edition: https://www.mongodb.com/products/updates/now-ga-mongodb-search-and-vector-search-for-community-edition/
 - PuLP: https://pypi.org/project/PuLP/

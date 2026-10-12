@@ -1,17 +1,20 @@
-"""Compare Gale-Shapley, ILP (PuLP) and greedy allocation on synthetic data.
+"""Compare Gale-Shapley, an ILP without stability constraints and greedy allocation on synthetic data.
 
 The dataset follows section 5 of docs/07-verification-plan.md: 200 students,
 25 supervisors in 5 research areas, capacities from 6 to 10, and preference
 lists of 1 to 5 supervisors. The data are synthetic and only show how the
 algorithms behave; they say nothing about real AITU students.
 
-Supervisor-side score: topic similarity only (GPA disabled). Equal scores are
-broken by the lower student ID. The exact ranking policy is defined in AC-F07
-of docs/06-requirements-spec.md.
+This is a simplified scenario with its own ranking policy, not the policy of
+AC-F07 in docs/06-requirements-spec.md. Supervisors rank students by topic
+similarity only: there is no preference-rank term, GPA is not used and no
+submission times are simulated. Equal scores are broken by the lower student ID.
 
-Usage:
-    pip install "pulp==4.0.0" "highspy==1.15.1" "numpy==2.5.4"
-    python experiments/allocation_comparison.py
+The experiment needs Python 3.12 or newer, so it uses its own environment and
+not the Python 3.11 environment of the backend:
+    python3.13 -m venv experiments/.venv
+    experiments/.venv/bin/pip install -r experiments/requirements.txt
+    experiments/.venv/bin/python experiments/allocation_comparison.py
 """
 
 import time
@@ -170,7 +173,7 @@ def metrics(assignment, similarity, preferences, capacities):
 
 METHODS = {
     "Gale-Shapley": gale_shapley,
-    "ILP (PuLP)": ilp,
+    "ILP without stability constraints": ilp,
     "Greedy by topic score": greedy,
 }
 

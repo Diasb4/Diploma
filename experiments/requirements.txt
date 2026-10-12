@@ -1,0 +1,4 @@
+# Python 3.12 or newer is required (PuLP 4.0 and NumPy 2.5 do not support Python 3.11).
+pulp==4.0.0
+highspy==1.15.1
+numpy==2.5.4

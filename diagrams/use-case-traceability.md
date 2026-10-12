@@ -28,12 +28,12 @@ Rendered diagrams are in `exports/`: one overview and one view per actor.
 | UC-18 Publish allocation | Coordinator | FR-10 | AC-F10 | Must |
 | UC-19 Export allocation as CSV | Coordinator | FR-11 | AC-F11 | Must |
 | UC-20 View audit log | Coordinator | FR-12 | AC-F12 | Must |
-| UC-21 Compare with baselines | Coordinator | FR-15 | Reproducible evaluation report | Should |
+| UC-21 View evaluation reports | Coordinator | FR-15 | AC-F15 | Should |
 | UC-22 Compare draft scenarios | Coordinator | FR-16 | Scenario isolation integration test | Could |
 | UC-23 Validate deadline and eligibility | System, included by UC-02 and UC-05 | FR-02, FR-04, FR-06 | AC-F02, AC-F04, AC-F06 | Must |
 | UC-24 Compute semantic similarity | System, included by UC-03 and UC-25 | FR-05, FR-07 | AC-F05, AC-F07 | Must |
 | UC-25 Build supervisor-side ranking | System, included by UC-15 | FR-07 | AC-F07 | Must |
-| UC-26 Solve capacity-constrained matching | System, included by UC-15 | FR-08 | AC-F08 | Must |
+| UC-26 Run student-proposing Gale-Shapley matching | System, included by UC-15 | FR-08 | AC-F08 | Must |
 | UC-27 Validate allocation | System, included by UC-16, UC-17 and UC-18 | FR-08, FR-09, FR-10, FR-13 | AC-F08, AC-F09, AC-F10 | Must |
 | UC-28 Notify participants | System, extends UC-18 | FR-14 | Delivery test with a simulated failed channel | Should |
 
@@ -49,7 +49,7 @@ The first version followed the project overview. After the requirements draft ap
 - The preference list holds one to five supervisors (FR-06), not three.
 - The supervisor no longer proposes diploma topics, reviews applicants or marks priority applicants. FR-03 limits the supervisor to the profile, a proposed capacity and the supervisor's own published assignments. The supervisor-side order comes from the ranking policy (FR-07).
 - Capacity is proposed by the supervisor and approved by the coordinator (FR-03), instead of being set directly.
-- The scoring weights became a ranking policy with a semantic weight and an optional GPA weight. Student preference order is not a weight (section 7 of the requirements).
+- The scoring weights became a ranking policy with three weights: topic fit, student preference rank and optional GPA. The submitted preference list stays the student-side order, and the score cannot reorder it (section 7 of the requirements).
 - Export is CSV only (FR-11). The first version had PDF and Excel.
 - Added from the requirements: freezing the input snapshot, validating and publishing an allocation, the audit log, notifications, baseline comparison and scenario comparison.
 

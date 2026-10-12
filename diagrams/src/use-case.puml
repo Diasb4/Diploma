@@ -173,7 +173,7 @@ rectangle "MAS: Coordinator scenarios" {
   usecase "UC-10\nCreate cycle and set deadline\n(FR-04)" as UC10
   usecase "UC-11\nEnroll eligible participants\n(FR-04)" as UC11
   usecase "UC-12\nApprove supervisor capacity\n(FR-03)" as UC12
-  usecase "UC-13\nConfigure ranking policy\n(semantic weight, optional GPA\nweight, versioned, FR-07)" as UC13
+  usecase "UC-13\nConfigure ranking policy\n(topic, preference rank and\noptional GPA weights,\nversioned, FR-07)" as UC13
   usecase "UC-14\nFreeze input snapshot\n(FR-04)" as UC14
   usecase "UC-15\nRun batch allocation\n(FR-08)" as UC15
   usecase "UC-16\nReview draft allocation\n(FR-09)" as UC16
@@ -181,12 +181,12 @@ rectangle "MAS: Coordinator scenarios" {
   usecase "UC-18\nPublish allocation\n(FR-10)" as UC18
   usecase "UC-19\nExport allocation as CSV\n(FR-11)" as UC19
   usecase "UC-20\nView audit log\n(FR-12)" as UC20
-  usecase "UC-21\nCompare with baselines\n(Should, FR-15)" as UC21
+  usecase "UC-21\nView evaluation reports\n(Should, FR-15)" as UC21
   usecase "UC-22\nCompare draft scenarios\n(Could, FR-16)" as UC22
 
   usecase "UC-24\nCompute semantic similarity" as UC24
   usecase "UC-25\nBuild supervisor-side ranking" as UC25
-  usecase "UC-26\nSolve capacity-constrained\nmatching" as UC26
+  usecase "UC-26\nRun student-proposing\nGale-Shapley matching" as UC26
   usecase "UC-27\nValidate allocation\n(capacity, eligibility,\nuniqueness, stability)" as UC27
   usecase "UC-28\nNotify participants\n(Should, FR-14)" as UC28
 }

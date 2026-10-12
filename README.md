@@ -86,8 +86,8 @@ Every academic year, thesis allocation runs into the same bottlenecks:
 
 * **Backend:** Python 3.11, FastAPI, SQLAlchemy, Pydantic
 * **Database & Vectors:** PostgreSQL 16 with `pgvector`
-* **Machine Learning / NLP:** PyTorch, Sentence-Transformers (`all-MiniLM-L6-v2`)
-* **Optimization:** Extended Gale-Shapley algorithm / PuLP (Integer Linear Programming)
+* **Machine Learning / NLP:** PyTorch, Sentence-Transformers (`BAAI/bge-m3`, see [docs/05-technology-selection.md](docs/05-technology-selection.md))
+* **Optimization:** Extended Gale-Shapley algorithm; PuLP with the HiGHS solver (Integer Linear Programming) for comparison
 * **Frontend:** React, Next.js (TypeScript), Tailwind CSS
 * **Project Management:** YouTrack, Git / GitHub
 

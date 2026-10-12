@@ -10,7 +10,7 @@ Task: MAS-3, Systematic Literature Review
 
 ## 1. Introduction
 
-MAS has three main parts. First, it compares a student's thesis proposal with the research profiles of supervisors using text similarity. For this it uses sentence embeddings: numeric vectors that represent the meaning of a text, so that texts with similar meaning get similar vectors. Second, it combines several criteria (topic fit, the student's own ranking of supervisors, GPA) into one score, which is a multi-criteria decision making (MCDM) task. Third, it assigns students to supervisors with a stable matching algorithm that respects supervisor quotas.
+MAS has three main parts. First, it compares a student's thesis proposal with the research profiles of supervisors using text similarity. For this it uses sentence embeddings: numeric vectors that represent the meaning of a text, so that texts with similar meaning get similar vectors. Second, it ranks the students who applied to each supervisor with a score that combines several criteria, such as topic fit and, if approved, GPA. Combining criteria into one score is a multi-criteria decision making (MCDM) task. Each student's own list of preferred supervisors is kept as a separate, strict order. Third, it assigns students to supervisors with a stable matching algorithm that respects supervisor quotas.
 
 This review answers three questions:
 
@@ -20,7 +20,20 @@ This review answers three questions:
 
 ## 2. How the Sources Were Selected
 
-We searched Google Scholar, ACL Anthology, arXiv, ScienceDirect, SpringerLink, IOPscience, DOAJ and the repository of SDU University (Kazakhstan). The main keywords were "student-project allocation", "stable matching", "Gale-Shapley", "reviewer assignment", "thesis supervisor recommendation", "sentence embeddings", "SBERT", "MCDM", "AHP" and "TOPSIS".
+The search was carried out in October 2026 with a general web search engine. The results led us to the publisher sites and digital libraries where the papers are published: ACL Anthology, arXiv, ScienceDirect, SpringerLink, IOPscience, Nature, DOAJ and the repository of SDU University (Kazakhstan). We used the following queries:
+
+| Topic | Query |
+|---|---|
+| Stable matching | "student-project allocation" stable matching algorithm |
+| Stable matching | hospitals/residents problem stable matching capacities algorithm ties |
+| Reviewer assignment | reviewer assignment fairness similarity optimization peer review algorithm |
+| Supervisor recommendation | thesis supervisor recommendation system |
+| Text similarity | supervisor recommendation semantic similarity sentence embeddings SBERT |
+| Text similarity | text embedding benchmark scientific document representations |
+| MCDM | AHP TOPSIS thesis supervisor selection |
+| Allocation | student supervisor allocation integer programming preferences workload |
+
+We then followed the references of the most relevant papers to find the original sources of the methods.
 
 A paper was selected if:
 
@@ -29,7 +42,7 @@ A paper was selected if:
 - it was published in 2021-2026, or it is an older paper that is the original source of a method we use or describes a known problem of such a method;
 - its full text is available and written in English.
 
-The searches returned 114 unique records. After reading titles and abstracts, 33 of them were relevant and could be verified. From these we kept the 15 papers that are most reliable and most useful for MAS: 10 papers from 2021-2026 and 5 older foundational papers. All numbers quoted below were checked against the full texts of the papers.
+We first screened the titles and abstracts of the results, then checked the remaining papers against these rules and read the full texts of the candidates. When several papers supported the same point, we kept the one from the more reliable venue. The final list contains 15 papers: 10 papers from 2021-2026 and 5 older foundational papers. All numbers quoted below were checked against the full texts of the papers.
 
 ## 3. Comparative Matrix
 
@@ -60,8 +73,8 @@ Gale-Shapley and its SPA versions [1], [2] always give a stable result that resp
 Gaps:
 
 1. Preferences come from outside. All matching papers [1]-[5] take preference lists as input or build them from questionnaires, never from the thesis topics. A stable result can therefore still be a poor topic fit.
-2. Supervisors do not rank students in practice. The SPA model [2] needs every lecturer to rank students, and [6] needs manual evaluations from both sides. MAS can build the supervisor-side ranking automatically from topic similarity and GPA.
-3. Ties cause problems. When several options have the same rank, there is in general no fast way to find the largest stable matching [3], and a matching that stays stable for every way of breaking the ties often does not exist [4]. Such a matching exists much more often when ties appear only on the lecturers' side (74% of random instances with 1,000 students) [4]. In MAS students give a strict ranking, and we will add a fixed tie-breaking rule for supervisors: exact score, then GPA, then submission time.
+2. Supervisors do not rank students in practice. The SPA model [2] needs every lecturer to rank students, and [6] needs manual evaluations from both sides. MAS can build the supervisor-side ranking automatically from topic similarity and, if approved, GPA.
+3. Some model variants make matching harder. In the SPA model where lecturers rank projects instead of students, stable matchings can have different sizes, and there is in general no fast way to find the largest one [3]. A different problem appears when preference lists contain ties: a matching that stays stable for every way of breaking the ties often does not exist [4]. Such a matching exists much more often when ties appear only on the lecturers' side (74% of random instances with 1,000 students) [4]. MAS avoids both problems by using strict orders on both sides: students submit a strict ranking, and equal supervisor-side scores are resolved by a fixed, deterministic rule. The exact rule is defined in the requirements specification.
 4. Stability is only one kind of fairness. The reviewer assignment method [7] instead tries to give the best possible result to the paper that is worst off. We will therefore compare Gale-Shapley with an exact optimisation model (integer linear programming, ILP) and a simple greedy assignment.
 
 ### 4.2 SBERT and semantic matching
@@ -72,7 +85,7 @@ Gaps:
 
 1. Most supervisor recommenders still use word overlap. Both [12] and [14] use keyword-based methods (TF-IDF or BM25), which only count shared words and miss synonyms and paraphrases.
 2. Evaluation is weak. [12] does not measure accuracy at all, and in [11] the ground truth is the list of advisors the students wanted. The reviewer assignment system [8] compared its results with the previous cycle, when assignments were based on keywords and mismatches were fixed by hand. We want to evaluate MAS in the same way, against the previous year's assignments.
-3. Our languages are not tested. No reviewed study used Russian or Kazakh texts, and according to MTEB [10] no model is the best on every task. The model therefore has to be tested on AITU data.
+3. Our languages are not tested. No reviewed study used Russian or Kazakh texts, and according to MTEB [10] no model is the best on every task. The model therefore has to be tested on AITU data. The language scope of the first experiment is set in the project proposal; choosing a multilingual model keeps the option to add Russian and Kazakh texts later.
 4. Recommenders do not assign. [11], [12] and [14] give each student a list of supervisors but do not consider supervisor capacity.
 
 ### 4.3 MCDM
@@ -93,7 +106,7 @@ Gaps:
 | Stable matching ignores thesis topics | [1]-[5] | Topic similarity is part of the score used for ranking |
 | Supervisors do not rank students by hand | [2], [6] | Supervisor-side ranking is computed automatically |
 | Recommenders ignore supervisor capacity | [11], [12], [14] | Gale-Shapley assignment with fixed quotas |
-| Word-based text matching | [12], [14] | Multilingual sentence embeddings |
+| Word-based text matching | [12], [14] | Sentence embeddings from a multilingual model |
 | Fixed weights; TOPSIS rankings change when a supervisor is added or removed | [14], [15] | Simple weighted sum with sensitivity analysis |
 
 None of the reviewed papers combines all three parts: text similarity, a multi-criteria score and stable matching with quotas. This is the gap that MAS addresses.
@@ -105,7 +118,7 @@ None of the reviewed papers combines all three parts: text similarity, a multi-c
 
 ## 6. Limitations
 
-We did not search Scopus or Web of Science directly, so some papers may be missing. Two papers from 2025 that may be close to our work (on supervisor allocation with LLMs and linear programming, and on SBERT combined with Gale-Shapley) were excluded because we could not confirm their authors or method. One included paper [12] uses a small dataset, so we use it only as an example of the typical TF-IDF approach.
+We did not search Scopus, Web of Science or Google Scholar systematically, so some papers may be missing. Two papers from 2025 that may be close to our work (on supervisor allocation with LLMs and linear programming, and on SBERT combined with Gale-Shapley) were excluded because we could not confirm their authors or method. One included paper [12] uses a small dataset, so we use it only as an example of the typical TF-IDF approach.
 
 ## References
 

@@ -19,7 +19,7 @@
 <text x="56" y="120" font-size="14" font-weight="normal" fill="#666" text-anchor="start" >Run the matching on the frozen input, check the draft, then publish.</text>
 <text x="1256" y="96" font-size="13" font-weight="normal" fill="#444" text-anchor="end" >Inputs frozen: date and time, with time zone</text>
 <g id="readiness">
-<rect x="56" y="140" width="360" height="370" rx="8" fill="#fff" stroke="#bbb" />
+<rect x="56" y="140" width="360" height="356" rx="8" fill="#fff" stroke="#bbb" />
 <text x="80" y="172" font-size="16" font-weight="bold" fill="#222" text-anchor="start" >Before you run</text>
 <text x="80" y="196" font-size="13" font-weight="normal" fill="#666" text-anchor="start" >All three checks must pass.</text>
 <rect x="80" y="212" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
@@ -27,38 +27,45 @@
 <text x="96" y="256" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >25 of 25 supervisors</text>
 <rect x="330" y="227" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
 <text x="356.0" y="245" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
-<rect x="80" y="276" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
-<text x="96" y="300" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Ranking policy approved</text>
-<text x="96" y="320" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Version v3</text>
-<rect x="330" y="291" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
-<text x="356.0" y="309" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
-<rect x="80" y="340" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
-<text x="96" y="364" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Input snapshot frozen</text>
-<text x="96" y="384" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >38 eligible students, 2 ineligible</text>
-<rect x="330" y="355" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
-<text x="356.0" y="373" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
-<text x="80" y="424" font-size="13" font-weight="normal" fill="#222" text-anchor="start" text-decoration="underline">Show ineligible students and reasons</text>
-<rect x="80" y="438" width="200" height="44" rx="6" fill="#222" stroke="#222" />
-<text x="180" y="466" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle" >Run allocation</text>
-<text x="80" y="500" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Disabled until all three checks pass.</text>
+<rect x="80" y="272" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="96" y="296" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Ranking policy approved</text>
+<text x="96" y="316" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Version v3</text>
+<rect x="330" y="287" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="356.0" y="305" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
+<rect x="80" y="332" width="312" height="56" rx="6" fill="#fafafa" stroke="#bbb" />
+<text x="96" y="356" font-size="14" font-weight="bold" fill="#222" text-anchor="start" >Input snapshot frozen</text>
+<text x="96" y="376" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >38 eligible students, 2 ineligible</text>
+<rect x="330" y="347" width="52" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="356.0" y="365" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Ready</text>
+<text x="80" y="412" font-size="13" font-weight="normal" fill="#222" text-anchor="start" text-decoration="underline">Show ineligible students and reasons</text>
+<rect x="80" y="426" width="200" height="44" rx="6" fill="#222" stroke="#222" />
+<text x="180" y="454" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle" >Run allocation</text>
+<text x="80" y="488" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Disabled until all three checks pass.</text>
 </g>
 <g id="ranking-policy">
-<rect x="56" y="530" width="360" height="320" rx="8" fill="#fff" stroke="#bbb" />
-<text x="80" y="562" font-size="16" font-weight="bold" fill="#222" text-anchor="start" >Ranking policy</text>
-<rect x="272" y="546" width="120" height="26" rx="13" fill="#fff" stroke="#999" />
-<text x="332.0" y="564" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Active version v3</text>
-<text x="80" y="588" font-size="13" font-weight="normal" fill="#666" text-anchor="start" >Weights are 0 or more and add up to 1.</text>
-<text x="80" y="622" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >Semantic match weight</text>
-<rect x="80" y="632" width="140" height="34" rx="4" fill="#fff" stroke="#888" />
-<text x="94" y="654" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.80</text>
-<text x="80" y="694" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >GPA weight (optional)</text>
-<rect x="80" y="704" width="140" height="34" rx="4" fill="#fff" stroke="#888" />
-<text x="94" y="726" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.20</text>
-<text x="240" y="690" font-size="13" font-weight="bold" fill="#444" text-anchor="start" >Sum: 1.00</text>
-<text x="240" y="708" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Valid</text>
-<rect x="80" y="762" width="200" height="40" rx="4" fill="#fff" stroke="#888" />
-<text x="180.0" y="786.0" font-size="13" font-weight="normal" fill="#222" text-anchor="middle" >Save as new version</text>
-<text x="80" y="826" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >A run keeps the policy version it started with.</text>
+<rect x="56" y="512" width="360" height="338" rx="8" fill="#fff" stroke="#bbb" />
+<text x="80" y="544" font-size="16" font-weight="bold" fill="#222" text-anchor="start" >Ranking policy</text>
+<rect x="272" y="528" width="120" height="26" rx="13" fill="#fff" stroke="#999" />
+<text x="332.0" y="546" font-size="12" font-weight="normal" fill="#444" text-anchor="middle" >Active version v3</text>
+<text x="80" y="568" font-size="13" font-weight="normal" fill="#666" text-anchor="start" >Weights are 0 or more and add up to 1.</text>
+<text x="80" y="596" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >Topic fit weight (semantic match)</text>
+<rect x="80" y="604" width="120" height="30" rx="4" fill="#fff" stroke="#888" />
+<text x="94" y="624" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.50</text>
+<text x="80" y="652" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >Preference rank weight</text>
+<rect x="80" y="660" width="120" height="30" rx="4" fill="#fff" stroke="#888" />
+<text x="94" y="680" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.30</text>
+<text x="80" y="708" font-size="13" font-weight="normal" fill="#444" text-anchor="start" >GPA weight (optional)</text>
+<rect x="80" y="716" width="120" height="30" rx="4" fill="#fff" stroke="#888" />
+<text x="94" y="736" font-size="14" font-weight="normal" fill="#222" text-anchor="start" >0.20</text>
+<text x="232" y="626" font-size="13" font-weight="bold" fill="#444" text-anchor="start" >Sum: 1.00</text>
+<text x="232" y="644" font-size="12" font-weight="normal" fill="#666" text-anchor="start" >Valid</text>
+<rect x="232" y="722" width="16" height="16" rx="3" fill="#222" stroke="#222" />
+<polyline points="235,730 239,734 245,726" fill="none" stroke="#fff" stroke-width="2"/>
+<text x="256" y="735" font-size="12" font-weight="normal" fill="#444" text-anchor="start" >Use approved GPA</text>
+<rect x="80" y="762" width="200" height="36" rx="4" fill="#fff" stroke="#888" />
+<text x="180.0" y="784.0" font-size="13" font-weight="normal" fill="#222" text-anchor="middle" >Save as new version</text>
+<text x="80" y="816" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >A run keeps the policy version it started with.</text>
+<text x="80" y="832" font-size="12" font-weight="normal" fill="#888" text-anchor="start" >Ties: GPA, then list acceptance time, then ID.</text>
 </g>
 <g id="draft-allocation">
 <rect x="440" y="140" width="816" height="710" rx="8" fill="#fff" stroke="#bbb" />
@@ -168,7 +175,7 @@
 </g>
 <g id="annotations">
 <circle cx="34" cy="300" r="11" fill="#222"/><text x="34" y="304" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">1</text>
-<circle cx="34" cy="460" r="11" fill="#222"/><text x="34" y="464" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">2</text>
+<circle cx="34" cy="448" r="11" fill="#222"/><text x="34" y="452" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">2</text>
 <circle cx="34" cy="650" r="11" fill="#222"/><text x="34" y="654" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">3</text>
 <circle cx="428" cy="242" r="11" fill="#222"/><text x="428" y="246" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">4</text>
 <circle cx="428" cy="299" r="11" fill="#222"/><text x="428" y="303" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">5</text>

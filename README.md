@@ -65,10 +65,11 @@ Every academic year, thesis allocation runs into the same bottlenecks:
   * Web interface for preference submission and results inspection.
 * **Out of Scope:**
   * Direct integration with internal university HR/payroll systems.
+  * University SSO integration; the MVP uses authorized MAS test accounts.
   * Native mobile apps (the web client is mobile-responsive).
 
 ### Current Development Status
-* **Milestone:** Pre-Defense 1 (October 24, 2026)
+* **Milestone:** Diploma Project Pre-Defense Preparation (presentation submission: October 15, 2026)
 * **Stage:** Analysis, System Design, and Requirements Formalization.
 * **Current Tasks:**
   - [x] Initial repository setup and branch conventions

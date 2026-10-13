@@ -45,11 +45,11 @@ Several large sites (docs.moodle.org, Google Help, Utrecht University pages) wer
 |---|---|---|
 | Google Forms and Sheets, Microsoft Forms and Excel | General office tools | The workflow most departments use today for collecting choices and allocating by hand |
 | Moodle with the Fair Allocation plugin (`mod_ratingallocate`) | LMS plugin, open source | The most widely documented allocation tool that runs inside an LMS |
-| MentorcliQ | Commercial mentoring SaaS | Named in the project plan as an example of matching software sold as a product |
+| MentorcliQ | Commercial mentoring SaaS | Named in the task description (YouTrack MAS-12) as an example of matching software sold as a product |
 | Cambridge PDN project allocation tool | Open-source optimiser | A university department's own allocation tool with ranked preferences, quotas and an optimiser |
 | Koolen thesis-supervision pipeline | Open-source script | The only verified tool that matches topic text to supervisor profiles |
 
-**ProjectAlloc.** The project plan lists a system called "ProjectAlloc". No product, university tool, paper or company with this name could be verified. The only two GitHub repositories with this name are from 2019. One is empty. The other is a small Django scaffold with no README, licence or allocation code ([repository](https://github.com/sherifsiyanbola/projectAlloc), [models.py](https://github.com/sherifsiyanbola/projectAlloc/blob/master/alloc/models.py)). PyPI and npm have no package with the name. It is therefore not compared here. The Cambridge tool and the Koolen pipeline take its place as examples of dedicated allocation software.
+**ProjectAlloc.** The task description (YouTrack MAS-12) lists a system called "ProjectAlloc". No product, university tool, paper or company with this name could be verified. The only two GitHub repositories with this name are from 2019. One is empty. The other is a small Django scaffold with no README, licence or allocation code ([repository](https://github.com/sherifsiyanbola/projectAlloc), [models.py](https://github.com/sherifsiyanbola/projectAlloc/blob/master/alloc/models.py)). PyPI and npm have no package with the name. It is therefore not compared here. The Cambridge tool and the Koolen pipeline take its place as examples of dedicated allocation software.
 
 **Reviewed but not in the matrix.** The following were checked and left out so the matrix stays at five systems.
 
@@ -128,7 +128,7 @@ The package is version 0.1.0, created in July 2026, with one author, no declared
 
 ### Design implications for MAS
 
-- Topic-to-profile similarity should feed the same objective as preference rank, quota and other attributes, with weights the coordinator can change.
+- Topic-to-profile similarity should feed the same weighted ranking as preference rank, with weights the coordinator can change. Supervisor capacities stay hard limits.
 - Coordinators, supervisors and students need separate web views, and manual changes need a logged reason.
 - The fairness notion and the outcome metrics should be stated and measured, such as the share of students who get their first choice. This belongs in the verification plan.
 - Interface language support for Russian, Kazakh and English has to be confirmed with users. No verified tool documents it.
@@ -137,7 +137,7 @@ The package is version 0.1.0, created in July 2026, with one author, no declared
 
 - "Not documented" and "No" record what the sources say. They do not prove a feature is absent. For MentorcliQ in particular, settings behind a customer login were not visible.
 - None of the tools was installed or run for this document. Ratings come from documentation, code and vendor pages.
-- The comparison does not describe the current process at Astana IT University. The interviews in `02-relevance-interviews.md` test that separately.
+- The comparison does not describe the current process at Astana IT University. The interviews planned in task MAS-11 (`02-relevance-interviews.md`, in preparation) test that separately.
 - The wording "none of the verified tools documents" is deliberate. A 2026 paper and several student prototypes also describe text matching, and none of them is verified as a maintained tool.
 
 ## Conclusion

@@ -65,16 +65,17 @@ Every academic year, thesis allocation runs into the same bottlenecks:
   * Web interface for preference submission and results inspection.
 * **Out of Scope:**
   * Direct integration with internal university HR/payroll systems.
+  * University SSO integration; the MVP uses authorized MAS test accounts.
   * Native mobile apps (the web client is mobile-responsive).
 
 ### Current Development Status
-* **Milestone:** Pre-Defense 1 (October 24, 2026)
+* **Milestone:** Diploma Project Pre-Defense Preparation (presentation submission: October 15, 2026)
 * **Stage:** Analysis, System Design, and Requirements Formalization.
 * **Current Tasks:**
   - [x] Initial repository setup and branch conventions
   - [x] Project proposal and scope definition
   - [ ] Problem validation interviews (CustDev)
-  - [ ] Literature review of matching algorithms and NLP methods
+  - [x] Literature review of matching algorithms and NLP methods ([docs/03-literature-review.md](docs/03-literature-review.md))
   - [ ] System comparison and technology selection
   - [ ] Architecture diagrams (System Context, Use Case, Component)
   - [ ] UI wireframes and API specifications
@@ -86,8 +87,8 @@ Every academic year, thesis allocation runs into the same bottlenecks:
 
 * **Backend:** Python 3.11, FastAPI, SQLAlchemy, Pydantic
 * **Database & Vectors:** PostgreSQL 16 with `pgvector`
-* **Machine Learning / NLP:** PyTorch, Sentence-Transformers (`all-MiniLM-L6-v2`)
-* **Optimization:** Extended Gale-Shapley algorithm / PuLP (Integer Linear Programming)
+* **Machine Learning / NLP:** PyTorch, Sentence-Transformers (`BAAI/bge-m3`, see [docs/05-technology-selection.md](docs/05-technology-selection.md))
+* **Optimization:** Extended Gale-Shapley algorithm; PuLP with the HiGHS solver (Integer Linear Programming) for comparison
 * **Frontend:** React, Next.js (TypeScript), Tailwind CSS
 * **Project Management:** YouTrack, Git / GitHub
 

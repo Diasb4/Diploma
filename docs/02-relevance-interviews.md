@@ -18,6 +18,8 @@ We plan 3 to 5 conversations of about 20 to 30 minutes each:
 
 Respondents are recorded by role and an anonymous label (S1, S2, P1, C1). Names are not stored in the repository.
 
+The team also ran a short anonymous survey of students. Its results are in the section "Student survey" below. The interviews with a supervisor and the coordinator are still planned.
+
 ## Assumptions to test
 
 These statements come from the project proposal. None of them is confirmed yet.
@@ -76,8 +78,65 @@ For each interview we will add a short record under "Interview records" below wi
 
 ## Interview records
 
-Not conducted yet.
+Interviews with a supervisor and with the department coordinator: not conducted yet. The assumptions about supervisor workload (H2) and about how the department allocates supervisors (H3) cannot be checked without them.
+
+## Student survey
+
+### Method
+
+The survey follows the student part of the guide above. It has 15 questions: consent, year of study, how the respondent found and obtained a supervisor, how much information was available, how close the supervisor's field is to the thesis topic, how clear and fair the process seemed, whether the decision could be influenced, what the respondent would change, and how useful a topic-based recommendation with a ranked list of up to five supervisors would be. It was answered in Google Forms. The form collects no names or e-mail addresses, and every respondent agreed to anonymous use of the answers. Free-text answers are quoted below in English translation, and the originals are in Russian. The raw responses stay with the team and can be shown to the supervisor on request.
+
+### Sample
+
+12 responses were received on 13 October 2026. 11 respondents were third-year students and 1 was a graduate. Respondents were not selected at random. No supervisor and no coordinator took part.
+
+### Results
+
+| Question | Result |
+|---|---|
+| How did you get your supervisor? | 11 of 12 chose a supervisor themselves and agreed with them. 1 had not chosen yet. Nobody reported being assigned from a list |
+| How did you learn who the supervisors are? (several answers allowed) | Wrote to teachers personally: 8. Department list: 5. Asked acquaintances or older students: 4. Did not look: 2. Publications or online profiles: 1 |
+| Was there enough information to choose? (1 to 5) | Mean 2.9. 4 of 12 answered 1 or 2, and 4 answered 4 or 5 |
+| How close is the supervisor's field to your thesis topic? (1 to 5) | Mean 3.7. 6 of 12 answered 4 or 5, and 1 answered 2 |
+| Did you get the supervisor you wanted? | Yes: 7. Partly: 3. No: 1. Not chosen yet: 1 |
+| Was the process clear? (1 to 5) | Mean 3.1. 9 of 12 answered 3 |
+| Did the process seem fair? (1 to 5) | Mean 3.3. 5 of 12 answered 4 or 5, and 2 answered 2 |
+| Could you influence or appeal the decision? | Yes: 3. No: 1. Do not know: 5. No answer: 3 |
+| How useful would recommended supervisors with a ranked list of up to five be? (1 to 5) | 11 answers, mean 4.1. 8 answered 4 or 5, and 1 answered 2 |
+
+Seven respondents named missing information. Four of them wrote about availability: whether a supervisor or a topic was still free, and how many students a supervisor takes. Two wrote about the supervisor's profile, expectations and character. One wrote about time.
+
+- "The supervisors did not fill in the table, and it was not known whether a topic was taken or not."
+- "It was not clear which of the teachers was free."
+- "The supervisor's profile and what they expect from a student."
+- "I do not know exactly, but time was definitely not enough to choose a supervisor, a topic and a team."
+- "The desired supervisor did not answer." (given as the reason for not getting the wanted supervisor)
+
+Six respondents answered what they would change. Two asked for more time and timely deadline notifications, and two asked for an online platform for the distribution. One would change their supervisor, and one was satisfied.
+
+Four respondents answered what worries them about a recommendation system. Two had no worries. The other two wrote "Accuracy" and "Understanding which advisor you are choosing and whether they suit you."
+
+### Limits
+
+- The sample is small and not random, and almost all respondents are third-year students. The percentages describe these 12 people only.
+- Most scale answers are in the middle of the scale, so the differences between questions are small.
+- The answers are self-reported. Two free-text answers carry little information and are kept as received.
+- The survey asked about the idea of recommended supervisors at the end. The answers show interest in the described idea, not how students would use it.
+- Supervisors and the coordinator are not represented.
 
 ## Validation matrix
 
-Filled in after the interviews.
+| ID | Assumption | Status | Evidence and limits |
+|---|---|---|---|
+| H1 | Students are often assigned to supervisors whose research does not match their topic | Not supported in this sample | Mean closeness is 3.7 of 5, and 1 of 12 answered 2. Most respondents chose their own supervisor, so this sample does not test assignment by a department |
+| H2 | Some supervisors are overloaded while others have free capacity | Not tested | No supervisor or coordinator was asked. Indirect signal: 4 of 12 students said they could not see which supervisors had free places |
+| H3 | Allocation is done by hand in forms and spreadsheets and takes the department weeks | Not tested | Needs the coordinator. Students describe self-service: 11 of 12 arranged a supervisor themselves, and one answer mentions a shared table that supervisors did not fill in |
+| H4 | Students do not know which supervisor works on topics close to theirs | Partly verified | Mean information score is 2.9 of 5 and 4 of 12 answered 1 or 2. The gaps students named were mostly about availability (4 of 7) and the supervisor's profile (2 of 7). Most students relied on personal contact (8 of 12) |
+| H5 | The current process feels unclear or unfair to the people in it | Partly verified, neutral rather than negative | Clarity 3.1 and fairness 3.3 of 5. 9 of 12 did not know whether they could influence the decision, said they could not, or gave no answer |
+| H6 | A ranked list of preferences plus a match score would be useful and acceptable | Partly verified | 8 of 11 rated the idea 4 or 5. The match score was not asked separately, and only students answered |
+
+### What this means for the project
+
+- The students describe a self-service process: they look for a supervisor and agree with them personally. The proposal's wording about students being assigned to supervisors should be confirmed with the coordinator before it is presented as fact.
+- Visibility of free places was the most frequent information gap. Whether students should see the remaining capacity of a supervisor is an open question for the requirements and the prototype.
+- Deadline reminders were requested. The notification requirement FR-14 covers only the publication of results.

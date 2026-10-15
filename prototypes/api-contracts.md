@@ -124,6 +124,22 @@ Limits from AC-F02: title 5 to 200 characters, abstract 100 to 5,000 characters,
 Errors:
 
 - 409 `proposal_not_submitted` when the student has no submitted proposal.
+- 422 `unsupported_input` with `"retryable": false` when the proposal text is outside the scope declared for the model and preprocessing versions (AC-F05). The response carries no recommendations, and the stored proposal and the submitted preferences stay unchanged:
+
+```json
+{
+  "error": {
+    "code": "unsupported_input",
+    "message": "The abstract is outside the supported scope of the recommendation model, so no supervisors are suggested. Edit the text and submit again.",
+    "retryable": false,
+    "fields": [
+      {"field": "abstract", "code": "language_not_supported", "message": "The abstract language is not supported."}
+    ]
+  }
+}
+```
+
+  The field code names the reason. `language_not_supported` is the one example here, and the full list of codes depends on the scope that the model declaration sets.
 - 503 `semantic_service_unavailable` with `"retryable": true`. The response carries no recommendations, and the submitted preferences stay unchanged (AC-F05).
 
 ## Screen 2: preference list (student)

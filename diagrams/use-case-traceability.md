@@ -2,7 +2,7 @@
 
 This table links every use case in `src/use-case.puml` to the requirement and the acceptance criteria in [`docs/06-requirements-spec.md`](../docs/06-requirements-spec.md). It lets a reviewer check that scenarios and requirements describe the same system.
 
-Rendered diagrams are in `exports/`: one overview and one view per actor.
+Rendered diagrams are in `exports/`: one overview and one view per actor. The step-by-step scenarios for each actor are in [actor-scenarios.md](actor-scenarios.md).
 
 ## Use cases and requirements
 

@@ -11,7 +11,7 @@
 
 MAS supports thesis-supervisor assignment at Astana IT University. Students submit proposals and ranked preferences, supervisors maintain research profiles and capacities, and department coordinators configure and review allocations.
 
-This specification derives from the [README](../README.md), the [MAS-3 literature review](03-literature-review.md), and the revised [project proposal](01-proposal.md) submitted in [PR #8](https://github.com/Diasb4/Diploma/pull/8). It adopts MAS-3's multilingual embedding evaluation, weighted-sum ranking, score/GPA/submission-time tie-breaking, and Gale-Shapley comparison with ILP and greedy allocation. It defines the proposed requirements for YouTrack task MAS-8. The assigned author is Dias Tursynbai and the peer reviewer is Nurzhan.
+This specification derives from the [README](../README.md), the [MAS-3 literature review](03-literature-review.md), and the revised [project proposal](01-proposal.md) submitted in [PR #8](https://github.com/Diasb4/Diploma/pull/8). MAS-3 motivates multilingual embedding evaluation, weighted-sum ranking, and comparison of Gale-Shapley with ILP and greedy allocation. This specification defines the exact ranking formula and deterministic tie-breaking order in AC-F07 and section 7; that order is a proposed project policy, not a rule prescribed by the literature review. It defines the proposed requirements for YouTrack task MAS-8. The assigned author is Dias Tursynbai and the peer reviewer is Nurzhan.
 
 The acceptance criteria below describe required future behavior, not completed implementation or verified stakeholder findings. Numeric thresholds and policy choices are proposed design targets pending supervisor review.
 
@@ -23,7 +23,7 @@ The acceptance criteria below describe required future behavior, not completed i
 | Supervisor | Maintain own research profile, propose capacity, inspect own published assignments. |
 | Department Coordinator | Manage cycles, approve capacities and ranking policy, run and review allocation, publish results, export records. |
 
-The MVP covers one department and one allocation cycle at a time, with role-based accounts, proposal text, semantic recommendations, a weighted-sum policy combining topic fit and student preference rank, GPA as an optional approved score and tie-breaking criterion, hard supervisor capacities, and coordinator-controlled publication. The planned recommendation model is multilingual and locally executed; release language support depends on evaluation of available English, Russian, Kazakh, and cross-language examples. Native mobile applications and HR/payroll integration are excluded. Identity-provider selection and the final model version belong to subsequent architecture and technology decisions. Student-proposing one-to-many Gale-Shapley is the main solver; ILP and greedy methods are evaluation alternatives.
+The MVP covers one department and one allocation cycle at a time, with role-based accounts, proposal text, semantic recommendations, a weighted-sum policy combining topic fit and student preference rank, GPA as an optional approved score and tie-breaking criterion, hard supervisor capacities, and coordinator-controlled publication. The planned recommendation model is multilingual and locally executed; release language support depends on evaluation of available English, Russian, Kazakh, and cross-language examples. Authentication uses authorized MAS test accounts; MAS manages sessions, role assignments, and record ownership. University SSO, native mobile applications, and HR/payroll integration are excluded from the MVP. The final model version belongs to subsequent architecture and technology decisions. Student-proposing one-to-many Gale-Shapley is the main solver; ILP and greedy methods are evaluation alternatives.
 
 ## 3. Prioritization
 
@@ -36,7 +36,7 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 
 | ID | Priority | Requirement | Acceptance criteria |
 |---|---|---|---|
-| FR-01 | Must | The system shall authenticate users and enforce Student, Supervisor, and Coordinator permissions on every protected operation. | AC-F01 |
+| FR-01 | Must | The system shall authenticate authorized MAS test accounts and enforce Student, Supervisor, and Coordinator permissions on every protected operation; university SSO is outside the MVP. | AC-F01 |
 | FR-02 | Must | A student shall create, edit, and submit one thesis proposal per cycle containing title, abstract, and keywords before the deadline. | AC-F02 |
 | FR-03 | Must | A supervisor shall maintain research interests and publication text and propose a non-negative integer capacity; a coordinator shall approve the effective capacity for the cycle. | AC-F03 |
 | FR-04 | Must | A coordinator shall create an allocation cycle, enroll eligible participants, set a preference deadline, and freeze the input snapshot used for allocation. | AC-F04 |
@@ -72,6 +72,8 @@ The MVP covers one department and one allocation cycle at a time, with role-base
 Criteria below cover every Must requirement and the Should evaluation feature FR-15.
 
 ### AC-F01 — Authentication and authorization
+
+The verification environment provides authorized MAS test accounts for the Student, Supervisor, and Coordinator roles, including at least two distinct student accounts and two distinct supervisor accounts for ownership checks. MAS manages their sessions and role assignments; these tests do not require a university SSO provider.
 
 1. Given an authenticated account in each role, authorized operations succeed and operations reserved for another role return HTTP 403 without changing data.
 2. Given no valid session, protected endpoints return HTTP 401.
@@ -196,7 +198,7 @@ Criteria below cover every Must requirement and the Should evaluation feature FR
 
 ## 7. Domain rules and open decisions
 
-The proposed supervisor-side score follows the revised proposal and MAS-3's weighted-sum approach:
+MAS-3 motivates the use of a weighted sum. The following supervisor-side formula and the deterministic tie-breaking order in AC-F07 are defined by this specification, consistently with the revised proposal:
 
 ```text
 m(i, j) = (1 + cosine(i, j)) / 2
@@ -216,8 +218,6 @@ Supervisor review must confirm preference-score normalization and weights, GPA p
 
 ## 8. Verification and delivery traceability
 
-Each acceptance group links directly to its requirement ID. Future automated cases should use identifiers such as F07-preference-score, F07-gpa-timestamp-ties, F08-capacity, F15-historical-recall, F15-weight-sensitivity, and N02-publication-race; manual checks should record fixture, environment, expected result, actual result, and evidence location. The planned verification document is docs/07-verification-plan.md; it does not yet exist in this checkout.
+Each acceptance group links directly to its requirement ID. Future automated cases should use identifiers such as F07-preference-score, F07-gpa-timestamp-ties, F08-capacity, F15-historical-recall, F15-weight-sensitivity, and N02-publication-race; manual checks should record fixture, environment, expected result, actual result, and evidence location. The [verification and evaluation plan](07-verification-plan.md), merged in [PR #11](https://github.com/Diasb4/Diploma/pull/11), defines test levels, metrics, baselines, measurement conditions, and reporting rules for these requirements.
 
 This specification contains 17 functional requirements (including one release exclusion), 8 non-functional requirements, and explicit criteria for all 17 Must requirements: FR-01–FR-12 and NFR-01–NFR-05. Acceptance of this document requires completeness and peer review; application acceptance requires executing the criteria against the implementation.
-
-Deliver changes through the MAS-8-Requirements-Specification branch and [PR #6](https://github.com/Diasb4/Diploma/pull/6), referencing YouTrack task MAS-8 in commit messages. Nurzhan reviews the updated requirements before merging. Do not push directly to main or merge without the required peer approval. Link the merged PR to MAS-8 and mark the task Done only after its acceptance criteria have been met.

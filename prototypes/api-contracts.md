@@ -243,12 +243,17 @@ All requests below return 403 for students and supervisors (FR-01, AC-F09).
   "gpa_weight": 0.2,
   "gpa_approved": true,
   "gpa_enabled": true,
+  "normalization": {
+    "topic": "(1 + cosine) / 2",
+    "preference": "1 / list_position",
+    "gpa": "fixed approved scale"
+  },
   "tie_breaking": ["combined_score", "gpa", "list_accepted_at", "student_id"],
   "approved": true
 }
 ```
 
-`tie_breaking` is read-only and lists the order from AC-F07. The `gpa` step applies only when GPA is enabled.
+`tie_breaking` is read-only and lists the order from AC-F07. The `gpa` step applies only when GPA is enabled. `normalization` is read-only and repeats the rules of section 7 of the requirements, so a reviewer sees which scale produced the scores. AC-F04 also lists the numeric precision among the recorded policy fields. The requirements do not give its value or form, so the draft has no field for it until they do.
 
 `POST /cycles/{cycle_id}/ranking-policy` creates a new immutable version (FR-07, AC-F07). Weights are 0 or more and add up to 1 within 0.000001. Until GPA use is approved and enabled, `gpa_weight` must be 0.
 
@@ -273,9 +278,13 @@ The response is the new version, for example `"version": "v4"`. A bad sum return
   "frozen_at": "2026-11-16T06:00:01Z",
   "eligible_students": 38,
   "ineligible_students": 2,
-  "policy_version": "v3"
+  "policy_version": "v3",
+  "model_version": "sample-v1",
+  "preprocessing_version": "sample-pre-v1"
 }
 ```
+
+The snapshot also keeps the semantic scores, the preference scores, the combined scores and the derived supervisor-side rankings. It records the model and text-preprocessing versions that produced them (AC-F04). The draft returns only the versions and counts here. It has no endpoint that reads the saved scores and rankings back (see the open questions).
 
 A frozen snapshot is never modified. Changed inputs need a new snapshot identifier, and earlier snapshots stay available for replay and audit (AC-F04).
 
@@ -432,3 +441,4 @@ S-017,,ineligible,no_submitted_proposal,cyc-2026-27,R-0042
 - A run takes an optional `snapshot_id` and defaults to the latest frozen snapshot. The explicit review of a revised draft is a `reviewed` flag on publish. Both are proposals.
 - The coordinator responses use anonymous student ids. Names and GPA in these responses depend on the privacy policy (NFR-01).
 - Pagination uses `page` and `page_size`. Cursor-based paging is the alternative.
+- AC-F04 and AC-F12 say a reviewer can trace a published result to its snapshot, scores and rankings. The draft has no endpoint that returns the saved scores and rankings of a snapshot. It needs one, or an export, if the coordinator is to replay a run from the interface.

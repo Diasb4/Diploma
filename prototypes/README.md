@@ -172,6 +172,16 @@ Every control has a visible label. Check results and statuses are written out as
 - FR-14 (Should) wants notification delivery failures shown to the coordinator. The panel has no place for them yet.
 - The preference rank enters the score as 1 divided by the position in the student's list (section 7 of the requirements). The panel shows only its weight. The supervisor review still has to confirm the normalization and the weights.
 
+## Layout on narrow screens
+
+NFR-07 asks that core workflows work in current Chrome, Firefox and Edge at viewport widths of 360 and 1440 CSS pixels without horizontal page scrolling. All three wireframes show the 1440 px layout. The 360 px layout is not drawn yet. The notes below are proposals for it.
+
+- **Screen 1:** the two panels stack. The proposal form comes first and the recommendation cards follow it. Each card keeps its score, capacity and the Add to my list button on separate lines instead of side by side.
+- **Screen 2:** My preference list comes first and the list of eligible supervisors follows. Up and Down stay visible on every row. They are the alternative to dragging (NFR-04), and dragging is harder on a touch screen.
+- **Screen 3:** the readiness cards and the ranking policy stack in one column. The draft table may scroll inside its own container. The page itself must not scroll sideways.
+
+AC-N04 names the student workflows (proposal, preferences and result) as core. NFR-07 does not list its core workflows. Whether the coordinator panel must also work at 360 px needs a decision. Until then the proposal for screen 3 above is optional.
+
 ## Figma prototype
 
 [MAS UX prototype](https://www.figma.com/design/9CgkSjXyeDTuWuDcsW6W8A) holds the three screens as editable vector layers, imported from the SVG files in this folder. Two flows are set as starting points for Presentation view:

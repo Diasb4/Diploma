@@ -189,4 +189,4 @@ AC-N04 names the student workflows (proposal, preferences and result) as core. N
 - **Student: proposal and preferences.** On screen 1, Add to my list, Show all eligible supervisors and the Preferences tab open screen 2. The Proposal tab on screen 2 goes back to screen 1.
 - **Coordinator: allocation panel.** Screen 3 has no clicks. Its states are described in the section above.
 
-The SVG files in this folder stay the source. The Figma file was imported from them, so edits made in Figma are not copied back, and a changed screen has to be imported into Figma again. The file needs view access for the committee: Share, then anyone with the link can view.
+The SVG files in this folder stay the source. The Figma file was imported from them, so edits made in Figma are not copied back, and a changed screen has to be imported into Figma again. The file is shared with anyone who has the link, with view access only, so the committee can open it without an account. If the sharing setting changes, the link stops working for them: Share, then anyone with the link can view.

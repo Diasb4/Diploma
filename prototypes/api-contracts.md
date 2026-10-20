@@ -100,7 +100,7 @@ Limits from AC-F02: title 5 to 200 characters, abstract 100 to 5,000 characters,
 {
   "cycle_id": "cyc-2026-27",
   "state": "ok",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "score_note": "Similarity score, not a probability of acceptance.",
   "items": [
     {
@@ -124,6 +124,23 @@ Limits from AC-F02: title 5 to 200 characters, abstract 100 to 5,000 characters,
 Errors:
 
 - 409 `proposal_not_submitted` when the student has no submitted proposal.
+- 422 `unsupported_input` with `"retryable": false` when the language of the proposal text is not in the verified list (AC-F05 item 5). The response carries no recommendations, and the stored proposal and the submitted preferences stay unchanged:
+
+```json
+{
+  "error": {
+    "code": "unsupported_input",
+    "message": "The language of the proposal is not supported by the recommendation model, so no supervisors are suggested. Edit the text and submit again.",
+    "retryable": false,
+    "fields": [
+      {"field": "title", "code": "language_not_supported", "message": "The title language is not supported."},
+      {"field": "abstract", "code": "language_not_supported", "message": "The abstract language is not supported."}
+    ]
+  }
+}
+```
+
+  `language_not_supported` is the only field code. The embedded text is the title, abstract and keywords together, so `fields` names every field whose language is not supported, not only the abstract. The verified list comes from the evaluation in AC-F15. Until it verifies Russian or Kazakh, the draft assumes English only (docs/05: the model "works for English now"). Length is not a reason for this error. AC-F02 keeps the text far below the 8,192 tokens of bge-m3 (docs/05). With the smaller MiniLM fallback, which stops after 128 tokens, long texts are cut or split by the preprocessing (AC-F05 item 5) and not rejected.
 - 503 `semantic_service_unavailable` with `"retryable": true`. The response carries no recommendations, and the submitted preferences stay unchanged (AC-F05).
 
 ## Screen 2: preference list (student)
@@ -227,12 +244,17 @@ All requests below return 403 for students and supervisors (FR-01, AC-F09).
   "gpa_weight": 0.2,
   "gpa_approved": true,
   "gpa_enabled": true,
+  "normalization": {
+    "topic": "(1 + cosine) / 2",
+    "preference": "1 / list_position",
+    "gpa": "fixed approved scale"
+  },
   "tie_breaking": ["combined_score", "gpa", "list_accepted_at", "student_id"],
   "approved": true
 }
 ```
 
-`tie_breaking` is read-only and lists the order from AC-F07. The `gpa` step applies only when GPA is enabled.
+`tie_breaking` is read-only and lists the order from AC-F07. The `gpa` step applies only when GPA is enabled. `normalization` is read-only and repeats the rules of section 7 of the requirements, so a reviewer sees which scale produced the scores. AC-F04 also lists the numeric precision among the recorded policy fields. The requirements do not give its value or form, so the draft has no field for it until they do.
 
 `POST /cycles/{cycle_id}/ranking-policy` creates a new immutable version (FR-07, AC-F07). Weights are 0 or more and add up to 1 within 0.000001. Until GPA use is approved and enabled, `gpa_weight` must be 0.
 
@@ -257,9 +279,13 @@ The response is the new version, for example `"version": "v4"`. A bad sum return
   "frozen_at": "2026-11-16T06:00:01Z",
   "eligible_students": 38,
   "ineligible_students": 2,
-  "policy_version": "v3"
+  "policy_version": "v3",
+  "model_version": "BAAI/bge-m3",
+  "preprocessing_version": "sample-pre-v1"
 }
 ```
+
+The snapshot also keeps the semantic scores, the preference scores, the combined scores and the derived supervisor-side rankings. It records the model and text-preprocessing versions that produced them (AC-F04). The draft returns only the versions and counts here. It has no endpoint that reads the saved scores and rankings back (see the open questions).
 
 A frozen snapshot is never modified. Changed inputs need a new snapshot identifier, and earlier snapshots stay available for replay and audit (AC-F04).
 
@@ -281,7 +307,7 @@ Repeating the request for the same snapshot returns the existing run, so no dupl
   "status": "running",
   "policy_version": "v3",
   "algorithm_version": "gale-shapley-sp-v1",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "snapshot_id": "snap-0007"
 }
 ```
@@ -294,7 +320,7 @@ Repeating the request for the same snapshot returns the existing run, so no dupl
   "status": "draft",
   "policy_version": "v3",
   "algorithm_version": "gale-shapley-sp-v1",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "snapshot_id": "snap-0007",
   "summary": {
     "eligible_students": 38,
@@ -416,3 +442,4 @@ S-017,,ineligible,no_submitted_proposal,cyc-2026-27,R-0042
 - A run takes an optional `snapshot_id` and defaults to the latest frozen snapshot. The explicit review of a revised draft is a `reviewed` flag on publish. Both are proposals.
 - The coordinator responses use anonymous student ids. Names and GPA in these responses depend on the privacy policy (NFR-01).
 - Pagination uses `page` and `page_size`. Cursor-based paging is the alternative.
+- AC-F04 and AC-F12 say a reviewer can trace a published result to its snapshot, scores and rankings. The draft has no endpoint that returns the saved scores and rankings of a snapshot. It needs one, or an export, if the coordinator is to replay a run from the interface.

@@ -49,6 +49,7 @@ The supervisor names, scores, capacities and the model name in the wireframe are
 - **Fewer than five eligible supervisors:** all eligible supervisors are shown (AC-F05).
 - **No eligible supervisors:** an explicit message instead of cards.
 - **Service error:** a retryable message. No recommendations are made up and the submitted preferences stay unchanged (AC-F05).
+- **Unsupported input:** the language of the proposal text is not in the verified list. The panel shows a message that names the fields concerned (title, abstract, keywords) and no cards. The stored proposal and the submitted preferences stay unchanged, and the student can edit the text and submit again (AC-F05).
 - **Closed:** the deadline has passed or the inputs are frozen. The form is read-only and shows the last accepted proposal with its submission time (AC-F02).
 
 ### Accessibility
@@ -63,7 +64,8 @@ Every field has a visible label. Errors appear as text linked to the field, focu
 
 ### Open questions
 
-- The project overview lists a preferred tech stack as a proposal field. FR-02 has only title, abstract and keywords, so the wireframe leaves the tech stack out until the requirements decide.
+- FR-02 has only title, abstract and keywords, so the wireframe has no tech stack field. Adding one is a requirements decision.
+- The verified language list comes from the evaluation in AC-F15. Until it verifies Russian or Kazakh, the draft assumes English only. Length does not trigger this state: with the selected model (docs/05) the text fits, and with the smaller fallback the preprocessing cuts or splits long texts (AC-F05 item 5). The wording of the message waits for the model declaration.
 - FR-05 ties recommendations to a submitted proposal. Whether a student may preview recommendations for a draft needs a decision.
 - It is open whether a student can edit and resubmit after seeing the recommendations, and whether the list then refreshes.
 - The content of the View profile page is not defined yet.
@@ -170,6 +172,16 @@ Every control has a visible label. Check results and statuses are written out as
 - FR-14 (Should) wants notification delivery failures shown to the coordinator. The panel has no place for them yet.
 - The preference rank enters the score as 1 divided by the position in the student's list (section 7 of the requirements). The panel shows only its weight. The supervisor review still has to confirm the normalization and the weights.
 
+## Layout on narrow screens
+
+NFR-07 asks that core workflows work in current Chrome, Firefox and Edge at viewport widths of 360 and 1440 CSS pixels without horizontal page scrolling. All three wireframes show the 1440 px layout. The 360 px layout is not drawn yet. The notes below are proposals for it.
+
+- **Screen 1:** the two panels stack. The proposal form comes first and the recommendation cards follow it. Each card keeps its score, capacity and the Add to my list button on separate lines instead of side by side.
+- **Screen 2:** My preference list comes first and the list of eligible supervisors follows. Up and Down stay visible on every row. They are the alternative to dragging (NFR-04), and dragging is harder on a touch screen.
+- **Screen 3:** the readiness cards and the ranking policy stack in one column. The draft table may scroll inside its own container. The page itself must not scroll sideways.
+
+AC-N04 names the student workflows (proposal, preferences and result) as core. NFR-07 does not list its core workflows. Whether the coordinator panel must also work at 360 px needs a decision. Until then the proposal for screen 3 above is optional.
+
 ## Figma prototype
 
 [MAS UX prototype](https://www.figma.com/design/9CgkSjXyeDTuWuDcsW6W8A) holds the three screens as editable vector layers, imported from the SVG files in this folder. Two flows are set as starting points for Presentation view:
@@ -177,4 +189,4 @@ Every control has a visible label. Check results and statuses are written out as
 - **Student: proposal and preferences.** On screen 1, Add to my list, Show all eligible supervisors and the Preferences tab open screen 2. The Proposal tab on screen 2 goes back to screen 1.
 - **Coordinator: allocation panel.** Screen 3 has no clicks. Its states are described in the section above.
 
-The SVG files in this folder stay the source. The Figma file was imported from them, so edits made in Figma are not copied back, and a changed screen has to be imported into Figma again. The file needs view access for the committee: Share, then anyone with the link can view.
+The SVG files in this folder stay the source. The Figma file was imported from them, so edits made in Figma are not copied back, and a changed screen has to be imported into Figma again. The file is shared with anyone who has the link, with view access only, so the committee can open it without an account. If the sharing setting changes, the link stops working for them: Share, then anyone with the link can view.

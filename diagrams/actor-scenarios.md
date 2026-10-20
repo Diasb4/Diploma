@@ -125,10 +125,11 @@ Precondition: capacities are approved and a ranking policy is approved, because 
 Main flow:
 1. The coordinator starts the freeze.
 2. The system builds the supervisor-side ranking of the students who listed each supervisor, using the semantic scores and the policy.
-3. The system saves the snapshot: rosters, approved capacities, policy version, accepted proposals, ordered preferences with their acceptance times, supervisor research text, semantic scores and the rankings.
+3. The system saves the snapshot: the eligible rosters and pair eligibility, approved capacities, the policy version with its weights, normalization rules, GPA setting, numeric precision and tie-breaking order, accepted proposals, ordered preferences with their acceptance times, supervisor research text, the semantic scores, the preference scores, the combined scores, the derived supervisor-side rankings, and the model and text-preprocessing versions that produced them. When GPA is enabled, the snapshot also saves the GPA values with their approved source and normalization scale.
 4. The system reports the students that have no valid proposal or preference list as ineligible, with a reason. It does not assign them silently.
 
 Alternative flows:
+- GPA is enabled and a value is missing or out of range. The system blocks the freeze, because the rankings need the values, and names the affected records.
 - Inputs change after the freeze. The saved snapshot stays as it is. Allocation on changed inputs needs a new snapshot with a new identifier.
 
 Result: an immutable snapshot that the run uses.

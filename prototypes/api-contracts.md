@@ -100,7 +100,7 @@ Limits from AC-F02: title 5 to 200 characters, abstract 100 to 5,000 characters,
 {
   "cycle_id": "cyc-2026-27",
   "state": "ok",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "score_note": "Similarity score, not a probability of acceptance.",
   "items": [
     {
@@ -124,22 +124,23 @@ Limits from AC-F02: title 5 to 200 characters, abstract 100 to 5,000 characters,
 Errors:
 
 - 409 `proposal_not_submitted` when the student has no submitted proposal.
-- 422 `unsupported_input` with `"retryable": false` when the proposal text is outside the scope declared for the model and preprocessing versions (AC-F05). The response carries no recommendations, and the stored proposal and the submitted preferences stay unchanged:
+- 422 `unsupported_input` with `"retryable": false` when the language of the proposal text is not in the verified list (AC-F05 item 5). The response carries no recommendations, and the stored proposal and the submitted preferences stay unchanged:
 
 ```json
 {
   "error": {
     "code": "unsupported_input",
-    "message": "The abstract is outside the supported scope of the recommendation model, so no supervisors are suggested. Edit the text and submit again.",
+    "message": "The language of the proposal is not supported by the recommendation model, so no supervisors are suggested. Edit the text and submit again.",
     "retryable": false,
     "fields": [
+      {"field": "title", "code": "language_not_supported", "message": "The title language is not supported."},
       {"field": "abstract", "code": "language_not_supported", "message": "The abstract language is not supported."}
     ]
   }
 }
 ```
 
-  The field code names the reason. `language_not_supported` is the one example here, and the full list of codes depends on the scope that the model declaration sets.
+  `language_not_supported` is the only field code. The embedded text is the title, abstract and keywords together, so `fields` names every field whose language is not supported, not only the abstract. The verified list comes from the evaluation in AC-F15. Until it verifies Russian or Kazakh, the draft assumes English only (docs/05: the model "works for English now"). Length is not a reason for this error. AC-F02 keeps the text far below the 8,192 tokens of bge-m3 (docs/05). With the smaller MiniLM fallback, which stops after 128 tokens, long texts are cut or split by the preprocessing (AC-F05 item 5) and not rejected.
 - 503 `semantic_service_unavailable` with `"retryable": true`. The response carries no recommendations, and the submitted preferences stay unchanged (AC-F05).
 
 ## Screen 2: preference list (student)
@@ -279,7 +280,7 @@ The response is the new version, for example `"version": "v4"`. A bad sum return
   "eligible_students": 38,
   "ineligible_students": 2,
   "policy_version": "v3",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "preprocessing_version": "sample-pre-v1"
 }
 ```
@@ -306,7 +307,7 @@ Repeating the request for the same snapshot returns the existing run, so no dupl
   "status": "running",
   "policy_version": "v3",
   "algorithm_version": "gale-shapley-sp-v1",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "snapshot_id": "snap-0007"
 }
 ```
@@ -319,7 +320,7 @@ Repeating the request for the same snapshot returns the existing run, so no dupl
   "status": "draft",
   "policy_version": "v3",
   "algorithm_version": "gale-shapley-sp-v1",
-  "model_version": "sample-v1",
+  "model_version": "BAAI/bge-m3",
   "snapshot_id": "snap-0007",
   "summary": {
     "eligible_students": 38,

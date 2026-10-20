@@ -49,7 +49,7 @@ The supervisor names, scores, capacities and the model name in the wireframe are
 - **Fewer than five eligible supervisors:** all eligible supervisors are shown (AC-F05).
 - **No eligible supervisors:** an explicit message instead of cards.
 - **Service error:** a retryable message. No recommendations are made up and the submitted preferences stay unchanged (AC-F05).
-- **Unsupported input:** the proposal text is outside the language or length scope declared for the selected model. The panel shows a message that names the reason and no cards. The stored proposal and the submitted preferences stay unchanged, and the student can edit the text and submit again (AC-F05).
+- **Unsupported input:** the language of the proposal text is not in the verified list. The panel shows a message that names the fields concerned (title, abstract, keywords) and no cards. The stored proposal and the submitted preferences stay unchanged, and the student can edit the text and submit again (AC-F05).
 - **Closed:** the deadline has passed or the inputs are frozen. The form is read-only and shows the last accepted proposal with its submission time (AC-F02).
 
 ### Accessibility
@@ -65,7 +65,7 @@ Every field has a visible label. Errors appear as text linked to the field, focu
 ### Open questions
 
 - FR-02 has only title, abstract and keywords, so the wireframe has no tech stack field. Adding one is a requirements decision.
-- AC-F05 ties the supported languages and the handling of long texts to the selected model and its preprocessing. The wording of the Unsupported input message and the list of supported languages wait for that declaration.
+- The verified language list comes from the evaluation in AC-F15. Until it verifies Russian or Kazakh, the draft assumes English only. Length does not trigger this state: with the selected model (docs/05) the text fits, and with the smaller fallback the preprocessing cuts or splits long texts (AC-F05 item 5). The wording of the message waits for the model declaration.
 - FR-05 ties recommendations to a submitted proposal. Whether a student may preview recommendations for a draft needs a decision.
 - It is open whether a student can edit and resubmit after seeing the recommendations, and whether the list then refreshes.
 - The content of the View profile page is not defined yet.

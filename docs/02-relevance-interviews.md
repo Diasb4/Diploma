@@ -72,6 +72,26 @@ Ask open questions first and describe the project only at the end, so the answer
 9. What would make you trust or distrust the result?
 10. Is there anyone else we should talk to?
 
+## Policy decisions to confirm with the supervisor and the coordinator
+
+The requirements specification ([`docs/06-requirements-spec.md`](06-requirements-spec.md), section 7) lists decisions that are only proposals until a supervisor and the coordinator confirm them. They are not interview findings. The table turns each one into a plain question, so the same conversation that tests H2 and H3 can also settle them. The status column stays "Not asked yet" until the answer is recorded under "Interview records".
+
+| # | Decision | Question to ask | Ask | Requirement | Status |
+|---|---|---|---|---|---|
+| 1 | Ranking weights | How much should topic fit, the student's own ranking of supervisors and the student's grades count when the system orders applicants for one supervisor? | P1, C1 | FR-07, AC-F07 | Not asked yet |
+| 2 | Use of GPA | May grades be used at all, and which office provides the approved figures? | C1 | FR-07, AC-F07 | Not asked yet |
+| 3 | Ties and resubmission | If two applicants are equal for one supervisor, how should the system choose? If a student changes the list after submitting it, should the earlier submission time be kept? | P1, C1 | FR-06, AC-F06, AC-F07 | Not asked yet |
+| 4 | Eligibility | Which students take part in a cycle (year, program), and who is left out? | C1 | FR-04, AC-F04 | Not asked yet |
+| 5 | Proposal limits | Are a title of 5 to 200 characters, an abstract of 100 to 5,000 characters and 1 to 10 keywords workable for a thesis proposal? | P1, C1 | FR-02, AC-F02 | Not asked yet |
+| 6 | Deadline | When should the preference deadline fall, and what happens to a student who misses it? | C1 | FR-04, AC-F04 | Not asked yet |
+| 7 | Capacity | Who sets how many students a supervisor takes, and may the coordinator change that number? | P1, C1 | FR-03, AC-F03 | Not asked yet |
+| 8 | Manual changes | After the allocation, would the coordinator need to move a student by hand, and who has to agree? | C1 | FR-13 | Not asked yet |
+| 9 | Privacy and retention | How long may proposals and grades be kept, and who may see them? | C1 | NFR-01 covers access and logs, not retention | Not asked yet |
+| 10 | Historical data | Can last year's supervisor assignments and proposals be shared in anonymous form for evaluation? | C1 | AC-F15 | Not asked yet |
+| 11 | Languages | In which languages are proposals and supervisor profiles written: English, Russian, Kazakh? | P1, C1 | AC-F05 | Not asked yet |
+
+Questions 1 and 3 touch fairness. Ask for the respondent's own reasoning and write it down in their words. Do not suggest an answer.
+
 ## How results will be recorded
 
 For each interview we will add a short record under "Interview records" below with the date, the respondent label, the main facts, direct quotes (with permission) and the pain points they named. After all interviews we will fill in the validation matrix: every assumption H1 to H6 is marked as verified, partly verified or not verified, with a reference to the interviews that support it.

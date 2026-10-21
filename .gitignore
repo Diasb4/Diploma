@@ -88,3 +88,5 @@ coverage/
 *.tmp
 *.bak
 tmp/
+screenshot.png
+Снимок экрана*.png

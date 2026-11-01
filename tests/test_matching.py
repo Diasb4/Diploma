@@ -63,3 +63,4 @@ def test_capacity_overflow_handling():
 
     assert len(result.pairs) == total_quota
     assert len(result.unassigned_student_ids) == len(students) - total_quota
+

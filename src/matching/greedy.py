@@ -67,3 +67,4 @@ class GreedyAllocator(BaseAllocator):
 
         unassigned_ids = [s.id for s in students if s.id not in assigned_students]
         return pairs, unassigned_ids, remaining_quotas
+

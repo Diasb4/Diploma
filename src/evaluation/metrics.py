@@ -137,3 +137,4 @@ class MetricsCalculator:
             blocking_pairs_count=len(blocking_pairs),
             execution_time_ms=round(execution_time_ms, 2),
         )
+

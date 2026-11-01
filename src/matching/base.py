@@ -80,3 +80,4 @@ class BaseAllocator(ABC):
             max_q = quota_map.get(sup_id, 0)
             if count > max_q:
                 raise ValueError(f"Invariant violated: quota for {sup_id} exceeded ({count} > {max_q}).")
+

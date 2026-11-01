@@ -124,3 +124,4 @@ class AllocationResult(BaseModel):
     unassigned_student_ids: List[str]
     supervisor_remaining_quotas: Dict[str, int]
     metrics: AllocationMetrics
+

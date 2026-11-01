@@ -63,3 +63,4 @@ def test_topsis_properties():
     assert len(closeness) == 3
     assert closeness[0] > closeness[1] > closeness[2]
     assert np.all(closeness >= 0.0) and np.all(closeness <= 1.0)
+

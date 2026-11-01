@@ -34,3 +34,4 @@ def test_keyword_extraction():
     text_b = "Evaluating deep learning transformer architectures for text mining"
     common = SemanticEmbedder.extract_common_keywords(text_a, text_b)
     assert "deep" in common or "learning" in common
+

@@ -123,3 +123,4 @@ class MatchingEngine:
         for algo_key, allocator in self.allocators.items():
             results[algo_key] = allocator.allocate(students, supervisors, score_matrix)
         return results
+

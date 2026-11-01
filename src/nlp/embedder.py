@@ -119,3 +119,4 @@ class SemanticEmbedder:
         }
         common = [w for w in (words_a & words_b) if w not in stopwords]
         return common[:top_k]
+

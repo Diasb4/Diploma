@@ -118,3 +118,4 @@ class GaleShapleyAllocator(BaseAllocator):
 
         unassigned_ids = [s.id for s in students if s.id not in assigned_student_ids]
         return pairs, unassigned_ids, remaining_quotas
+

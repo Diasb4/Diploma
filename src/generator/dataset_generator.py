@@ -174,3 +174,4 @@ class UniversityDataGenerator:
             students.append(student)
 
         return students, supervisors
+

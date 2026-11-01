@@ -196,3 +196,4 @@ class MultiCriteriaScorer:
         denom[denom == 0] = 1.0
         closeness = dist_worst / denom
         return np.clip(closeness, 0.0, 1.0)
+

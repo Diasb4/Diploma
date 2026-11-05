@@ -137,7 +137,7 @@ The package is version 0.1.0, created in July 2026, with one author, no declared
 
 - "Not documented" and "No" record what the sources say. They do not prove a feature is absent. For MentorcliQ in particular, settings behind a customer login were not visible.
 - None of the tools was installed or run for this document. Ratings come from documentation, code and vendor pages.
-- The comparison does not describe the current process at Astana IT University. The interviews planned in task MAS-11 (`02-relevance-interviews.md`, in preparation) test that separately.
+- The comparison does not describe the current process at Astana IT University. The student survey and the interviews planned in task MAS-11 ([02-relevance-interviews.md](02-relevance-interviews.md)) test that separately. The interviews with a supervisor and the coordinator have not taken place yet.
 - The wording "none of the verified tools documents" is deliberate. A 2026 paper and several student prototypes also describe text matching, and none of them is verified as a maintained tool.
 
 ## Conclusion
